@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package videogame;
+package breakingBad;
 
 import java.awt.Graphics;
 
