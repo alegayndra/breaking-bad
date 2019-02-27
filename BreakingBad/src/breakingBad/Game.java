@@ -24,7 +24,7 @@ public class Game implements Runnable {
     private boolean running;                           // to set the game
     private Player player;                                // to use a player
     private KeyManager keyManager;            // to manage the keyboard
-    private MouseManager mouseManager;  // to manage the mouse
+    //private MouseManager mouseManager;  // to manage the mouse
     private Enemy enemy;                              // to move an enemy
     private int lives;                                         // to count the remaining lives of the player
     private boolean endGame;                       // to know when to end the game
@@ -41,7 +41,7 @@ public class Game implements Runnable {
         this.height = height;
         running = false;
         keyManager = new KeyManager();
-        mouseManager = new MouseManager();
+        //mouseManager = new MouseManager();
     }
 
     /**
@@ -74,10 +74,10 @@ public class Game implements Runnable {
          lives = 3;
          endGame = false;
          display.getJframe().addKeyListener(keyManager);
-         display.getJframe().addMouseListener(mouseManager);
-         display.getJframe().addMouseMotionListener(mouseManager);
-         display.getCanvas().addMouseListener(mouseManager);
-         display.getCanvas().addMouseMotionListener(mouseManager);
+//         display.getJframe().addMouseListener(mouseManager);
+//         display.getJframe().addMouseMotionListener(mouseManager);
+//         display.getCanvas().addMouseListener(mouseManager);
+//         display.getCanvas().addMouseMotionListener(mouseManager);
     }
 
     @Override
@@ -115,9 +115,9 @@ public class Game implements Runnable {
         return keyManager;
     }
 
-    public MouseManager getMouseManager() {
-        return mouseManager;
-    }
+//    public MouseManager getMouseManager() {
+//        return mouseManager;
+//    }
 
     private void tick() {
         keyManager.tick();
@@ -128,7 +128,7 @@ public class Game implements Runnable {
         }
         if (player.intersecta(enemy)) {
             lives--;
-            Assets.bomb.play();
+            //Assets.bomb.play();
             if(lives == 0) {
                 endGame = true;
             } else {
@@ -161,7 +161,7 @@ public class Game implements Runnable {
             g = bs.getDrawGraphics();
             g.drawImage(Assets.background, 0, 0, width, height, null);
             if(endGame) {
-                g.drawImage(Assets.endGame, getWidth() / 2 - 131, getHeight() / 2 - 30, 262, 60, null);
+                //g.drawImage(Assets.endGame, getWidth() / 2 - 131, getHeight() / 2 - 30, 262, 60, null);
             } else {
                 player.render(g);
                 enemy.render(g);

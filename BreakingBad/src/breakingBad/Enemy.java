@@ -150,7 +150,7 @@ public class Enemy extends Item {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.colision, getX(), getY(), getWidth(), getHeight(), null);
+        g.drawImage(Assets.brick, getX(), getY(), getWidth(), getHeight(), null);
     }
 
     @Override

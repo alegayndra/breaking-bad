@@ -13,20 +13,26 @@ import java.awt.image.BufferedImage;
  */
 public class Assets {
     public static BufferedImage background; // to store background image
-    public static BufferedImage player;     // to store the player image
-    public static BufferedImage colision; // to store the player image when it crashes with the edges of the screen
-    public static BufferedImage endGame; // to store image for when the game ends
-    public static SoundClip bomb;           // to store the sound of the bomb
+    public static BufferedImage paddle;     // to store the player image
+    public static BufferedImage pollos;
+    public static BufferedImage blueFlask;
+    public static BufferedImage greenFlask;
+    public static BufferedImage ball;
+    public static BufferedImage brick;
+    //public static SoundClip bomb;           // to store the sound of the bomb
 
     /**
      * initializing the images of the game
      */
     public static void init() {
-        background = ImageLoader.loadImage("/images/sky.png");
-        player = ImageLoader.loadImage("/images/star.png");
-        colision = ImageLoader.loadImage("/images/photo.png");
-        endGame = ImageLoader.loadImage("/images/game over bueno.png");
-        bomb = new SoundClip("/images/mono.wav");        
+        background = ImageLoader.loadImage("/images/desert.jpg");
+        paddle = ImageLoader.loadImage("/images/paddle.png");
+        pollos = ImageLoader.loadImage("/images/breakingbad-lospolloshermanosrug.png");
+        blueFlask = ImageLoader.loadImage("/images/flask2.png");
+        greenFlask = ImageLoader.loadImage("/images/flask1.png");
+        ball = ImageLoader.loadImage("/images/ball.png");
+        brick = ImageLoader.loadImage("/images/brick.png");
+        //bomb = new SoundClip("/images/mono.wav");        
     }
     
 }

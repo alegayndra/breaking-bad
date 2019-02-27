@@ -164,11 +164,11 @@ public class Player extends Item{
            setX(getX() + getSpeedX());
         }
         }*/
-        if (game.getMouseManager().isIzquierdo() && getPerimetro().contains(game.getMouseManager().getX(), game.getMouseManager().getY())) {
-            this.setX(game.getMouseManager().getX() - (getHeight() / 2));
-            this.setY(game.getMouseManager().getY() - (getHeight() / 2));
-            game.getMouseManager().setIzquierdo(false);                  
-        }
+//        if (game.getMouseManager().isIzquierdo() && getPerimetro().contains(game.getMouseManager().getX(), game.getMouseManager().getY())) {
+//            this.setX(game.getMouseManager().getX() - (getHeight() / 2));
+//            this.setY(game.getMouseManager().getY() - (getHeight() / 2));
+//            game.getMouseManager().setIzquierdo(false);                  
+//        }
         /*
         if (game.getKeyManager().increaseUp) {
             if (getSpeedX() != 0)  {
@@ -263,15 +263,6 @@ public class Player extends Item{
 
     @Override
     public void render(Graphics g) {
-       /**
-            if the player is in state of collision, draw it with an alternate image
-            else, draw it with the original image
-         */
-        if (getCollided() >  0) {
-            g.drawImage(Assets.colision, getX(), getY(), getWidth(), getHeight(), null);
-                setCollided(getCollided() - 1);
-        } else {
-            g.drawImage(Assets.player, getX(), getY(), getWidth(), getHeight(), null);
-        }
+        g.drawImage(Assets.paddle, getX(), getY(), getWidth(), getHeight(), null);
     }
 }
