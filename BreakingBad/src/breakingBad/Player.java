@@ -227,6 +227,7 @@ public class Player extends Item{
             }
         }
         */
+        
         setX(getX() + getSpeedX());
         setY(getY() + getSpeedY());
         
