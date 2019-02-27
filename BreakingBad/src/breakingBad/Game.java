@@ -66,11 +66,9 @@ public class Game implements Runnable {
     private void init() {
          display = new Display(title, getWidth(), getHeight());
          Assets.init();
-         int iPosX = (int) (Math.random() * getWidth() * 0.2d);
-         int iPosY = (int) (Math.random() * (getHeight() - 100));
-         player = new Player(iPosX, iPosY, 1, 100, 100, this);
-         iPosX = (int) (Math.random() * getWidth() * 0.2d + 0.8d * getWidth());
-         enemy = new Enemy(iPosX, iPosY, 100, 100, this);
+         player = new Player(getWidth() / 2, getHeight() -100, 1, 100, 100, this);
+        // iPosX = (int) (Math.random() * getWidth() * 0.2d + 0.8d * getWidth());
+         enemy = new Enemy(200, 200, 100, 100, this);
          lives = 3;
          endGame = false;
          display.getJframe().addKeyListener(keyManager);
@@ -132,7 +130,7 @@ public class Game implements Runnable {
             if(lives == 0) {
                 endGame = true;
             } else {
-                int iPosX = (int) (Math.random() * getWidth() * 0.2d);
+               /* int iPosX = (int) (Math.random() * getWidth() * 0.2d);
                 int iPosY = (int) (Math.random() * (getHeight() - 100));
                 player.setX(iPosX);
                 player.setY(iPosY);
@@ -140,6 +138,7 @@ public class Game implements Runnable {
                 enemy.setX(iPosX);
                 enemy.setY(iPosY);
                 enemy.setSpeed(enemy.getSpeed() + 1);
+                */
             }
         }
     }
