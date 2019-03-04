@@ -15,40 +15,28 @@ import java.util.Set;
  */
 public class Player extends Item{
 
-    private int direction;
     private int width;      // to know the width of the player
     private int height;     // to know the height of the player
     private Game game;      // to be able to use the KeyManager
     private int speedX;     // to store the speed the player travels in the x axis
-    private int speedY;     // to store the speed the player travels in the y axis
-    private int collided;    // to know if the player collided with the edges of the screen and how many time it still needs to be drawn with a different image
+    private int speedY;     // to store the speed the player travels in the y axisprivate int collided;    // to know if the player collided with the edges of the screen and how many time it still needs to be drawn with a different image
     
     /**
      * to create direction, width, height, and game and set the player is not moving and has not collided
      * @param x to set the x of the player
      * @param y to set the y of the player
      * @param direction to set the direction of the player
-     * @param width to set the width of the window
-     * @param height  to set the height of the window
+     * @param width to set the width of the player
+     * @param height  to set the height of the player
      * @param game to set the game of the player
      */
     public Player(int x, int y, int direction, int width, int height, Game game) {
         super(x, y);
-        this.direction = direction;
         this.width = width;
         this.height = height;
         this.game = game;
         this.speedX = 0;
         this.speedY = 0;
-        this.collided = 0;
-    }
-
-    /**
-     * To get the direction of the player
-     * @return an <code>int</code> value with the direction
-     */
-    public int getDirection() {
-        return direction;
     }
 
     /**
@@ -82,23 +70,7 @@ public class Player extends Item{
     public int getSpeedY() {
         return speedY;
     }
-
-    /**
-     * To get the quantity of frames it still needs to be treated as collided 
-     * @return an <code>int</code> value with the quantity of frames 
-     */
-    public int getCollided() {
-        return collided;
-    }
-
-    /**
-     * To set the direction of the player
-     * @param direction to set the direction of the player 
-     */
-    public void setDirection(int direction) {
-        this.direction = direction;
-    }
-
+    
     /**
      * To set the width of the player
      * @param width to set the width of the player 
@@ -132,13 +104,9 @@ public class Player extends Item{
     }
     
     /**
-     * To set the quantity of frames the player needs to be treated as collided
-     * @param collided to set the quantity of frames
+     * To get a rectangle with the position, width, and height of the player
+     * @return an <code>Rectangle</code> rectangle with the given position, width, and height
      */
-    public void setCollided(int collided) {
-        this.collided = collided;
-    }
-
    public Rectangle getPerimetro() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }

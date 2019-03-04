@@ -49,6 +49,10 @@ public class KeyManager implements KeyListener {
      * to enable or disable moves on every tick
      */
     public void tick() {
+        /**
+         * checks if in the last tick the keys 'p', 'g', and 'c' were pressed and if in the current tick they were released
+         * if this is true the corresponding flag of the keyi s true, else it is false
+         */
         if (lastPause && !keys[KeyEvent.VK_P]) {
             pause = true;
         } else {
