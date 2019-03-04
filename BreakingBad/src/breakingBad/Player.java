@@ -149,116 +149,26 @@ public class Player extends Item{
     
     @Override
     public void tick() {
-        /*
         // moving player depending on flags
-        if (game.getKeyManager().up) {
-           setY(getY() - getSpeedY());
-        }
-        if (game.getKeyManager().down) {
-           setY(getY() + getSpeedY());
-        }
         if (game.getKeyManager().left) {
            setX(getX() - getSpeedX());
         }
         if (game.getKeyManager().right) {
            setX(getX() + getSpeedX());
         }
-        }*/
-//        if (game.getMouseManager().isIzquierdo() && getPerimetro().contains(game.getMouseManager().getX(), game.getMouseManager().getY())) {
-//            this.setX(game.getMouseManager().getX() - (getHeight() / 2));
-//            this.setY(game.getMouseManager().getY() - (getHeight() / 2));
-//            game.getMouseManager().setIzquierdo(false);                  
-//        }
-        /*
-        if (game.getKeyManager().increaseUp) {
-            if (getSpeedX() != 0)  {
-                setSpeedY(getSpeedX());
-                if(getSpeedY() > 0) {
-                    setSpeedY(getSpeedY() * -1);
-                }
-                setSpeedX(0);
-            } else {
-                setSpeedY(getSpeedY()-1);
-                if(getSpeedY() ==  0) {
-                    setSpeedY(-1);
-                }
-            }
-        }
-        if (game.getKeyManager().increaseDown) {
-            if (getSpeedX() != 0)  {
-                setSpeedY(getSpeedX());
-                if(getSpeedY() <  0) {
-                    setSpeedY(getSpeedY() * -1);
-                }
-                setSpeedX(0);
-            } else {
-                setSpeedY(getSpeedY()+1);
-                if(getSpeedY() == 0) {
-                    setSpeedY(1);
-                }
-            }
-        }
-        if (game.getKeyManager().increaseLeft) {
-            if (getSpeedY() != 0) {
-                setSpeedX(getSpeedY());
-                if (getSpeedX() > 0) {
-                    setSpeedX(getSpeedX() * -1);
-                }
-                setSpeedY(0);
-            } else {
-                setSpeedX(getSpeedX()-1);
-                if(getSpeedX() == 0) {
-                    setSpeedX(-1);
-                }
-            }
-        }
-        if (game.getKeyManager().increaseRight) {
-             if (getSpeedY() != 0) {
-                setSpeedX(getSpeedY());
-                if (getSpeedX() < 0) {
-                    setSpeedX(getSpeedX() * -1);
-                }
-                setSpeedY(0);
-            } else {
-                setSpeedX(getSpeedX()+1);
-                if(getSpeedX() == 0) {
-                    setSpeedX(1);
-                }
-            }
-        }
-        */
         
-        setX(getX() + getSpeedX());
-        setY(getY() + getSpeedY());
-        
-        // if colision the speed gets inverted
+        // checks that the object does not goes out of the bounds
         if (getX() + 60 >= game.getWidth()) {
             setX(game.getWidth() - this.getWidth());
-            /*
-            setSpeedX(getSpeedX() * -1);
-            setCollided(25);
-            */
         }
         else if (getX() <= -30) {
             setX(0);
-            /*
-            setSpeedX(getSpeedX() * -1);
-            setCollided(25);
-            */
         }
         if (getY() + 80 >= game.getHeight()) {
             setY(game.getHeight() - this.getHeight());
-            /*
-            setSpeedY(getSpeedY() * -1);
-            setCollided(25);
-            */
         }
         else if (getY() <= -20) {
             setY(0);
-            /*
-            setSpeedY(getSpeedY() * -1);
-            setCollided(25);
-            */
         }
     }
 

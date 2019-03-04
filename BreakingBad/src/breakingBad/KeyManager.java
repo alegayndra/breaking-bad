@@ -13,15 +13,15 @@ import java.awt.event.KeyListener;
  * @author antoniomejorado
  */
 public class KeyManager implements KeyListener {
-    
-//    public boolean up;      // flag to move up the player
-//    public boolean down;    // flag to move down the player
+
     public boolean left;    // flag to move left the player
     public boolean right;   // flag to move right the player
-//    public boolean increaseUp; // flag to increase player's speed upwards
-//    public boolean increaseDown; // flag to increase player's speed downwards
-//    public boolean increaseLeft; // flag to increase player's speed to the left
-//    public boolean increaseRight; // flag to increase player's speed to the right
+    public boolean pause;
+    public boolean save;
+    public boolean load;
+    public boolean lastPause;
+    public boolean lastSave;
+    public boolean lastLoad;
 
     private boolean keys[];  // to store all the flags for every key
     
@@ -49,29 +49,24 @@ public class KeyManager implements KeyListener {
      * to enable or disable moves on every tick
      */
     public void tick() {
-//        if (up == true && keys[KeyEvent.VK_UP] == false) {
-//            increaseUp = true;
-//        } else {
-//            increaseUp = false;
-//        }
-//        if (down == true && keys[KeyEvent.VK_DOWN] == false) {
-//            increaseDown = true;
-//        } else {
-//            increaseDown = false;
-//        }
-//        if (left == true && keys[KeyEvent.VK_LEFT] == false) {
-//            increaseLeft = true;
-//        } else {
-//            increaseLeft = false;
-//        }
-//        if (right == true && keys[KeyEvent.VK_RIGHT] == false) {
-//            increaseRight = true;
-//        } else {
-//            increaseRight = false;
-//        }
+        if (lastPause && !keys[KeyEvent.VK_P]) {
+            pause = true;
+        } else {
+            pause = false;
+        }
         
-        //up = keys[KeyEvent.VK_UP];
-//        down = keys[KeyEvent.VK_DOWN];
+        if (lastSave && !keys[KeyEvent.VK_G]) {
+            save = true;
+        } else {
+            save = false;
+        }
+        
+        if (lastLoad  && !keys[KeyEvent.VK_C]) {
+            load = true;
+        } else {
+            load = false;
+        }
+        
         left = keys[KeyEvent.VK_LEFT];
         right = keys[KeyEvent.VK_RIGHT];
     }
