@@ -21,7 +21,7 @@ public class ReadFile {
     
     public static void readFile() {
         // Fichero del que queremos leer
-        File file = new File("fichero_leer.txt");
+        File file = new File("archivo.txt");
         Scanner s = null;
 
         try {
