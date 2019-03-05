@@ -39,6 +39,7 @@ public class Enemy extends Item {
         this.speed = 1;
     }
 
+
     /**
      * To get the width of the enemy
      * @return an <code>int</code> value with the width
@@ -112,6 +113,7 @@ public class Enemy extends Item {
     }
 
     public void tick(Player player) {
+        /*
         if(player.getX() < getX()) {
             setDirectionX(-1);
         } else if(player.getX() > getX()){
@@ -126,6 +128,8 @@ public class Enemy extends Item {
         } else {
             setDirectionY(0);
         }
+        */
+        
         
         setX(getX() + getDirectionX() * getSpeed());
         setY(getY() + getDirectionY() * getSpeed());

@@ -119,10 +119,10 @@ public class Player extends Item{
     public void tick() {
         // moving player depending on flags
         if (game.getKeyManager().left) {
-           setX(getX() - getSpeedX());
+           setX(x -= 5);
         }
         if (game.getKeyManager().right) {
-           setX(getX() + getSpeedX());
+           setX(x += 5);
         }
         
         // checks that the object does not goes out of the bounds
