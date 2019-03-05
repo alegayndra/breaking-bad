@@ -69,7 +69,7 @@ public class Game implements Runnable {
          display = new Display(title, getWidth(), getHeight());
          Assets.init();
          player = new Player(getWidth() / 2, getHeight() -100, 1, 100, 100, this);
-         ball = new Ball(player.getWidth(), player.getHeight() +10, 100, 100, this);
+         ball = new Ball(player.getX(), player.getY()-20, 100, 100, this);
         // iPosX = (int) (Math.random() * getWidth() * 0.2d + 0.8d * getWidth());
         // enemy = new Enemy(200, 200, 100, 100, this);
          int iPosX = 0;
