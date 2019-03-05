@@ -2,6 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/betin/Documents/NetBeansProjects/breakBad/breaking-bad/BreakingBad/src/breakingBad/Assets.java</file>
+            <file>file:/C:/Users/betin/Documents/NetBeansProjects/breakBad/breaking-bad/BreakingBad/src/breakingBad/Display.java</file>
+            <file>file:/C:/Users/betin/Documents/NetBeansProjects/breakBad/breaking-bad/BreakingBad/src/breakingBad/Enemy.java</file>
+            <file>file:/C:/Users/betin/Documents/NetBeansProjects/breakBad/breaking-bad/BreakingBad/src/breakingBad/KeyManager.java</file>
+            <file>file:/C:/Users/betin/Documents/NetBeansProjects/breakBad/breaking-bad/BreakingBad/src/breakingBad/Player.java</file>
+            <file>file:/C:/Users/betin/Documents/NetBeansProjects/breakBad/breaking-bad/BreakingBad/src/breakingBad/PowerUps.java</file>
+            <file>file:/C:/Users/betin/Documents/NetBeansProjects/breakBad/breaking-bad/BreakingBad/src/breakingBad/Ball.java</file>
+            <file>file:/C:/Users/betin/Documents/NetBeansProjects/breakBad/breaking-bad/BreakingBad/src/breakingBad/Game.java</file>
+        </group>
     </open-files>
 </project-private>
