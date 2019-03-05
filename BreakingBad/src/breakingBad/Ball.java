@@ -38,6 +38,7 @@ public class Ball extends Item{
         this.game = game;
     }
 
+
     /**
      * To get the width of the ball
      * @return an <code>int</code> value with the width

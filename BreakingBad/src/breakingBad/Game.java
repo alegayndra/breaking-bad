@@ -8,6 +8,7 @@ package breakingBad;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.LinkedList;
 
 /**
  *
@@ -25,10 +26,10 @@ public class Game implements Runnable {
     private Player player;                                // to use a player
     private KeyManager keyManager;            // to manage the keyboard
     //private MouseManager mouseManager;  // to manage the mouse
-    private Enemy enemy;                              // to move an enemy
+    private LinkedList<Enemy> bricks;                              // to move an enemy
     private int lives;                                         // to count the remaining lives of the player
     private boolean endGame;                       // to know when to end the game
-    
+    private Ball ball;                      //to use a ball
     /**
      * to create title, width and height and set the game is still not running
      * @param title to set the title of the window
@@ -42,6 +43,7 @@ public class Game implements Runnable {
         running = false;
         keyManager = new KeyManager();
         //mouseManager = new MouseManager();
+        bricks = new LinkedList<Enemy>();
     }
 
     /**
@@ -67,8 +69,22 @@ public class Game implements Runnable {
          display = new Display(title, getWidth(), getHeight());
          Assets.init();
          player = new Player(getWidth() / 2, getHeight() -100, 1, 100, 100, this);
+         ball = new Ball(player.getWidth(), player.getHeight() +10, 100, 100, this);
         // iPosX = (int) (Math.random() * getWidth() * 0.2d + 0.8d * getWidth());
-         enemy = new Enemy(200, 200, 100, 100, this);
+        // enemy = new Enemy(200, 200, 100, 100, this);
+         int iPosX = 0;
+         int iPosY = 0;
+        for (int i = 1; i <= 40; i++) {
+            //create bricks in a row
+            bricks.add(new Enemy(iPosX, iPosY, 100, 100, this));
+            iPosX +=80;
+            
+            // create 10 bricks every row
+            if(i % 10 == 0){
+                iPosY +=30;
+                iPosX = 0;
+            }
+        }
          lives = 3;
          endGame = false;
          display.getJframe().addKeyListener(keyManager);
@@ -122,9 +138,13 @@ public class Game implements Runnable {
         // avancing player with colision
         if (!endGame) {
             player.tick();
-            enemy.tick(player);
+            ball.tick();
+            //ticking all bricks
+            for (int i = 0; i < bricks.size(); i++) {
+            Enemy brick =  bricks.get(i);
+            brick.tick();
         }
-        if (player.intersecta(enemy)) {
+        if (player.intersecta(bricks)) {
             lives--;
             //Assets.bomb.play();
             if(lives == 0) {
@@ -141,6 +161,7 @@ public class Game implements Runnable {
                 */
             }
         }
+    }
     }
 
     private void render() {
@@ -163,7 +184,13 @@ public class Game implements Runnable {
                 //g.drawImage(Assets.endGame, getWidth() / 2 - 131, getHeight() / 2 - 30, 262, 60, null);
             } else {
                 player.render(g);
-                enemy.render(g);
+                ball.render(g);
+                
+                //rendering all bricks
+                for (int i = 0; i < bricks.size(); i++) {
+                Enemy brick = bricks.get(i);
+                brick.render(g);
+            }
             }
             bs.show();
             g.dispose();
