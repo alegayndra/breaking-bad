@@ -1,28 +1,12 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/betin/Documents/NetBeansProjects/breakBad/breaking-bad/BreakingBad/src/breakingBad/Assets.java</file>
-            <file>file:/C:/Users/betin/Documents/NetBeansProjects/breakBad/breaking-bad/BreakingBad/src/breakingBad/Display.java</file>
-            <file>file:/C:/Users/betin/Documents/NetBeansProjects/breakBad/breaking-bad/BreakingBad/src/breakingBad/Enemy.java</file>
-            <file>file:/C:/Users/betin/Documents/NetBeansProjects/breakBad/breaking-bad/BreakingBad/src/breakingBad/KeyManager.java</file>
-            <file>file:/C:/Users/betin/Documents/NetBeansProjects/breakBad/breaking-bad/BreakingBad/src/breakingBad/Player.java</file>
-            <file>file:/C:/Users/betin/Documents/NetBeansProjects/breakBad/breaking-bad/BreakingBad/src/breakingBad/PowerUps.java</file>
-            <file>file:/C:/Users/betin/Documents/NetBeansProjects/breakBad/breaking-bad/BreakingBad/src/breakingBad/Ball.java</file>
-            <file>file:/C:/Users/betin/Documents/NetBeansProjects/breakBad/breaking-bad/BreakingBad/src/breakingBad/Game.java</file>
-        </group>
-    </open-files>
-</project-private>
-=======
-<?xml version="1.0" encoding="UTF-8"?>
-<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
+            <file>file:/C:/Users/melba/Documents/NetBeansProjects/breaking-bad/BreakingBad/src/breakingBad/Ball.java</file>
             <file>file:/C:/Users/melba/Documents/NetBeansProjects/breaking-bad/BreakingBad/src/breakingBad/Display.java</file>
             <file>file:/C:/Users/melba/Documents/NetBeansProjects/breaking-bad/BreakingBad/src/breakingBad/Assets.java</file>
+            <file>file:/C:/Users/melba/Documents/NetBeansProjects/breaking-bad/BreakingBad/src/breakingBad/KeyManager.java</file>
             <file>file:/C:/Users/melba/Documents/NetBeansProjects/breaking-bad/BreakingBad/src/breakingBad/UsandoSonido.java</file>
             <file>file:/C:/Users/melba/Documents/NetBeansProjects/breaking-bad/BreakingBad/src/breakingBad/VideoGame.java</file>
             <file>file:/C:/Users/melba/Documents/NetBeansProjects/breaking-bad/BreakingBad/src/breakingBad/Player.java</file>
@@ -31,4 +15,3 @@
         </group>
     </open-files>
 </project-private>
->>>>>>> f43caeb024f69eec50e1af0f10914c86d9cca2dc
