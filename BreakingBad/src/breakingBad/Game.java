@@ -251,7 +251,7 @@ public class Game implements Runnable {
             ball.tick();
             if (ball.intersectaPaddle(player)) {
                 ball.setDirectionY(-1);
-                if (ball.getX() < player.getX()+getWidth()/2) {
+                if (ball.getX() + ball.getWidth()/2 < player.getX() + player.getWidth()/2) {
                     ball.setDirectionX(-1);
                 } else {
                     ball.setDirectionX(1);
@@ -260,20 +260,24 @@ public class Game implements Runnable {
             //ticking all bricks
             for (int i = 0; i < bricks.size(); i++) {
                 Enemy brick =  bricks.get(i);
-                if (ball.intersectaBloque(brick)) {
+                if (!brick.isDestroyed()) {
+                    if (ball.intersectaBloque(brick)) {
 //                    if (ball.getX() + ball.getSpeed() * ball.getDirectionX() <= brick.getX() + brick.getWidth()) {
 //                        ball.setDirectionX(1);
 //                    } else if (ball.getX() + ball.getWidth() + ball.getSpeed() * ball.getDirectionX()  >= brick.getX()) {
 //                        ball.setDirectionX(-1);
-//                    } else if (ball.getY() > brick.getY()) {
-//                        ball.setDirectionY(-1);
-//                    } else {
-//                        ball.setDirectionY(1);
-//                    }
-                    ball.setDirectionY(1);
-                    brick.setDestroyed(true);
-                    
+//                    } else 
+                        if (ball.getY() > brick.getY()) {
+                            ball.setDirectionY(-1);
+                        } else {
+                            ball.setDirectionY(1);
+                        }
+                        ball.setDirectionY(1);
+                        brick.setDestroyed(true);
+
+                    }
                 }
+                
             }
             if (ball.getY() + ball.getHeight() >= getHeight()) {
 //                lives--;

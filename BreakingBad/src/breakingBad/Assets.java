@@ -47,11 +47,8 @@ public class Assets {
 //        for(int i = 0; i < 9; i++){
 //            colors[i] = spritesheet.crop(i*64, 0, 64, 64);
 //        }
-        SpreadSheet spritesheet = new SpreadSheet(colorF);
-        colors = new BufferedImage[3];
-        
-        
-        
+//        SpreadSheet spritesheet = new SpreadSheet(colorF);
+//        colors = new BufferedImage[3];
     }
     
 }
