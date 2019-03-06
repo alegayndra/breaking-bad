@@ -13,18 +13,18 @@ import java.util.Scanner;
  * @author betin
  */
 public class ReadFile {
-    private Game game;
+//    private Game game;
+//    
+//    public ReadFile(Game game) {
+//        this.game = game;
+//    }
     
-    public ReadFile(Game game) {
-        this.game = game;
-    }
-    
-    public void readFile() {
+    public void readFile(Game game) {
         // Fichero del que queremos leer
         File file = new File("archivo.txt");
         Scanner s = null;
         
-        int x, y, width, height, directionX, directionY, type, score, lives;
+        int x, y, width, height, dirX, dirY, type, score, lives, endGame;
         
         /*
         player
@@ -41,36 +41,76 @@ public class ReadFile {
             
             //player
             x = Integer.parseInt(linea);
-//            file.write(game.getPlayer().getX() + " " + game.getPlayer().getY() + " " + game.getPlayer().getWidth() + " " + game.getPlayer().getX()  + "\n");
+            width = Integer.parseInt(linea);
+            height = Integer.parseInt(linea);
+            
+            game.getPlayer().setX(x);
+            game.getPlayer().setWidth(width);
+            game.getPlayer().setHeight(height);
+            System.out.println(game.getPlayer().getX() + " " + game.getPlayer().getWidth() + " " + game.getPlayer().getX()  + "\n");
 
             //bricks
             for (int i = 0; i < game.getBricks().size(); i++) {
-                Enemy brick = game.getBricks().get(i);
                 x = Integer.parseInt(s.nextLine());
                 if (x == 1) {
-                    brick.setDestroyed(true);
+                    game.getBricks().get(i).setDestroyed(true);
                 } else {
-                    brick.setDestroyed(false);
+                    game.getBricks().get(i).setDestroyed(false);
                 }
+                System.out.println(""+ game.getBricks().get(i).isDestroyed());
             }
 
             //ball
-//            file.write(game.getBall().getX() + " " + game.getBall().getY() + " " + game.getBall().getWidth() + " " + game.getBall().getHeight() + " " + game.getBall().getDirectionX() + " " + game.getBall().getDirectionY() + " " + "\n");
+            x = Integer.parseInt(linea);
+            y = Integer.parseInt(linea);
+            width = Integer.parseInt(linea);
+            height = Integer.parseInt(linea);
+            dirX = Integer.parseInt(linea);
+            dirY = Integer.parseInt(linea);
+            
+            game.getBall().setX(x);
+            game.getBall().setY(y);
+            game.getBall().setWidth(width);
+            game.getBall().setHeight(height);
+            game.getBall().setDirectionX(dirX);
+            game.getBall().setDirectionY(dirY);
+            System.out.println(game.getBall().getX() + " " + game.getBall().getY() + " " + game.getBall().getWidth() + " " + game.getBall().getHeight() + " " + game.getBall().getDirectionX() + " " + game.getBall().getDirectionY() + " " + "\n");
             
             //powerUps
-//            for (int i = 0; i < game.getPowerUps().size(); i++) {
-//                PowerUps power = game.getPowerUps().get(i);
-//                file.write(power.getX() + " " + power.getY() + " " + power.getWidth() + " " + power.getHeight() + " " + power.getType() + " " + "\n");
-//            }
+            for (int i = 0; i < game.getPowerUps().size(); i++) {
+                x = Integer.parseInt(linea);
+                y = Integer.parseInt(linea);
+                width = Integer.parseInt(linea);
+                height = Integer.parseInt(linea);
+                type = Integer.parseInt(linea);
+                
+                game.getPowerUps().get(i).setX(x);
+                game.getPowerUps().get(i).setY(y);
+                game.getPowerUps().get(i).setWidth(width);
+                game.getPowerUps().get(i).setHeight(height);
+                game.getPowerUps().get(i).setType(type);
+                System.out.println(game.getPowerUps().get(i).getX() + " " + game.getPowerUps().get(i).getY() + " " + game.getPowerUps().get(i).getWidth() + " " + game.getPowerUps().get(i).getHeight() + " " + game.getPowerUps().get(i).getType() + " " + "\n");
+            }
             
             //game
-//            file.write(game.getScore() + " " + game.getLives() + " " + (game.isEndGame() ? "1" : "0") + "\n");
+            score = Integer.parseInt(linea);
+            lives = Integer.parseInt(linea);
+            endGame = Integer.parseInt(linea);
+            
+            game.setScore(score);
+            game.setLives(lives);
+            if (x == 1) {
+                    game.setEndGame(true);
+                } else {
+                    game.setEndGame(false);
+                }
+            System.out.println(game.getScore() + " " + game.getLives() + " " + (game.isEndGame() ? "1" : "0") + "\n");
 
             // Leemos linea a linea el fichero
-            while (s.hasNextLine()) {
+//            while (s.hasNextLine()) {
 //                String linea = s.nextLine(); 	// Guardamos la linea en un String
-                System.out.println(linea);      // Imprimimos la linea
-            }
+//                System.out.println(linea);      // Imprimimos la linea
+//            }
 
         } catch (Exception ex) {
             System.out.println("Mensaje: " + ex.getMessage());
@@ -82,6 +122,6 @@ public class ReadFile {
             } catch (Exception ex2) {
                 System.out.println("Mensaje 2: " + ex2.getMessage());
             }
-        }	
+        }
     }
 }

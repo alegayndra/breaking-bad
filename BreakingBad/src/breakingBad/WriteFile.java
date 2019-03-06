@@ -12,13 +12,13 @@ import java.io.FileWriter;
  * @author betin
  */
 public class WriteFile {
-    private Game game;
+//    private Game game;
+//    
+//    public WriteFile(Game game) {
+//        this.game = game;
+//    }
     
-    public WriteFile(Game game) {
-        this.game = game;
-    }
-    
-    public void writeFile() {
+    public void writeFile(Game game) {
 
         /** FORMA 1 DE ESCRITURA **/
         
@@ -32,10 +32,11 @@ public class WriteFile {
         FileWriter file = null;
         try {
 
-            file = new FileWriter("archivo.txt");
+            file = new FileWriter("src/breakingbad/archivo.txt");
             
             //player
-            file.write(game.getPlayer().getX() + " " + game.getPlayer().getY() + " " + game.getPlayer().getWidth() + " " + game.getPlayer().getX()  + "\n");
+            file.write(game.getPlayer().getX() + "\n" + game.getPlayer().getWidth() + "\n" + game.getPlayer().getX()  + "\n");
+            System.out.println(game.getPlayer().getX() + "\n" + game.getPlayer().getWidth() + "\n" + game.getPlayer().getX()  + "\n");
 
             //bricks
             for (int i = 0; i < game.getBricks().size(); i++) {
@@ -44,19 +45,23 @@ public class WriteFile {
                 } else {
                     file.write("0\n");
                 }
+                System.out.println(""+ game.getBricks().get(i).isDestroyed());
             }
 
             //ball
-            file.write(game.getBall().getX() + " " + game.getBall().getY() + " " + game.getBall().getWidth() + " " + game.getBall().getHeight() + " " + game.getBall().getDirectionX() + " " + game.getBall().getDirectionY() + " " + "\n");
+            file.write(game.getBall().getX() + "\n" + game.getBall().getY() + "\n" + game.getBall().getWidth() + "\n" + game.getBall().getHeight() + "\n" + game.getBall().getDirectionX() + "\n" + game.getBall().getDirectionY() + "\n");
+            System.out.println(game.getBall().getX() + "\n" + game.getBall().getY() + "\n" + game.getBall().getWidth() + "\n" + game.getBall().getHeight() + "\n" + game.getBall().getDirectionX() + "\n" + game.getBall().getDirectionY() + "\n");
             
             //powerUps
             for (int i = 0; i < game.getPowerUps().size(); i++) {
                 PowerUps power = game.getPowerUps().get(i);
-                file.write(power.getX() + " " + power.getY() + " " + power.getWidth() + " " + power.getHeight() + " " + power.getType() + " " + "\n");
+                file.write(power.getX() + "\n" + power.getY() + "\n" + power.getWidth() + "\n" + power.getHeight() + "\n" + power.getType()  + "\n");
+                System.out.println(power.getX() + " " + power.getY() + " " + power.getWidth() + " " + power.getHeight() + " " + power.getType() + " " + "\n");
             }
             
             //game
-            file.write(game.getScore() + " " + game.getLives() + " " + (game.isEndGame() ? "1" : "0") + "\n");
+            file.write(game.getScore() + "\n" + game.getLives() + "\n" + (game.isEndGame() ? "1" : "0") + "\n");
+            System.out.println(game.getScore() + " " + game.getLives() + " " + (game.isEndGame() ? "1" : "0") + "\n");
             
             file.close();
 

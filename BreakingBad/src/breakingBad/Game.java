@@ -53,8 +53,8 @@ public class Game implements Runnable {
         keyManager = new KeyManager();
         //mouseManager = new MouseManager();
         bricks = new LinkedList<Enemy>();
-        wFile = new WriteFile(this);
-        rFile = new ReadFile(this);
+        wFile = new WriteFile();
+        rFile = new ReadFile();
         powerUps = new LinkedList<PowerUps>();
         pollos = new LinkedList<PowerUps>();
     }
@@ -186,14 +186,14 @@ public class Game implements Runnable {
         for(int i = 1; i <= 3; i++){
             //creating flasks in a row
             int dirX = (int) (Math.random() * 2-1)+1;
-            powerUps.add(new PowerUps(iPosX, iPosY, 100, 100, 2, dirX, 1, this));
+            powerUps.add(new PowerUps(iPosX, iPosY, 100, 100, 3, dirX, 1, this));
             iPosX += 300;
             iPosY = 100;           
         } 
         iPosX-=200;
         for(int i = 1;  i <= 2; i++){
             int dirX = (int) (Math.random() * 2-1)+1;
-            pollos.add(new PowerUps(iPosX, iPosY, 100, 100, 1, dirX ,2, this));
+            pollos.add(new PowerUps(iPosX, iPosY, 100, 100, 2, dirX ,2, this));
             //iPosX += 100;
             iPosY += 50;
         } 
@@ -245,38 +245,54 @@ public class Game implements Runnable {
             pauseGame = !pauseGame;
         }
         if (getKeyManager().save) {
-            wFile.writeFile();
+            wFile.writeFile(this);
         } 
         if (getKeyManager().load) {
-            rFile.readFile();
+            rFile.readFile(this);
         }
         if (getKeyManager().restart) {
             player = new Player(getWidth() / 2, getHeight() -100, 1, 100, 100, this);
             ball = new Ball(player.getX()-50, player.getY()-100, 100, 100, this);
             int iPosX = 0;
             int iPosY = 0;
-            for (int i = 1; i <= 40; i++) {
+            for (int i = 1; i <= 30; i++) {
                //create bricks in a row
                bricks.add(new Enemy(iPosX, iPosY, 100, 100, this));
                iPosX +=80;
 
                // create 10 bricks every row
-               if(i % 10 == 0){
+               if(i % 10 == 0 ){
                    iPosY +=30;
                    iPosX = 0;
                }
-            }
-            lives = 3;
-            endGame = false;
-            display.getJframe().addKeyListener(keyManager);
-            pauseGame = false;
+
+           }
+           for(int i = 1; i <= 3; i++){
+               //creating flasks in a row
+               int dirX = (int) (Math.random() * 2-1)+1;
+               powerUps.add(new PowerUps(iPosX, iPosY, 100, 100, 2, dirX, 1, this));
+               iPosX += 300;
+               iPosY = 100;           
+           } 
+           iPosX-=200;
+           for(int i = 1;  i <= 2; i++){
+               int dirX = (int) (Math.random() * 2-1)+1;
+               pollos.add(new PowerUps(iPosX, iPosY, 100, 100, 1, dirX ,2, this));
+               //iPosX += 100;
+               iPosY += 50;
+           } 
+           cantBricks = 30;
+           lives = 3;
+           endGame = false;
+           display.getJframe().addKeyListener(keyManager);
+           pauseGame = false;
          }
         // avancing player with colision
         if (!endGame && !pauseGame) {
             
             if (getKeyManager().moveBall && !ball.isMoving()) {
                 ball.setMoving(true);
-                ball.setSpeed(2);
+                ball.setSpeed(3);
                 ball.setDirectionY(-1);
             }
             player.tick();
