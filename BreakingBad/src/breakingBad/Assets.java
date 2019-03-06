@@ -16,14 +16,13 @@ public class Assets {
     public static BufferedImage paddle;     // to store the player image
     public static BufferedImage pollos;
     public static BufferedImage blueFlask;
-    public static BufferedImage greenFlask;
+    public static BufferedImage blueFlask_left;
+    public static BufferedImage blueFlask_right;
     public static BufferedImage ball;
     public static BufferedImage brick;
     //public static SoundClip bomb;           // to store the sound of the bomb
-    
     //to store flask color
-    public static BufferedImage colorF;
-    public static BufferedImage colors[];
+    public static BufferedImage flasks[];
 // 
     /**
      * initializing the images of the game
@@ -32,11 +31,13 @@ public class Assets {
         background = ImageLoader.loadImage("/images/desert.jpg");
         paddle = ImageLoader.loadImage("/images/paddle.png");
         pollos = ImageLoader.loadImage("/images/breakingbad-lospolloshermanosrug.png");
-        blueFlask = ImageLoader.loadImage("/images/flask2.png");
-        greenFlask = ImageLoader.loadImage("/images/flask1.png");
+        blueFlask = ImageLoader.loadImage("/images/blueflask.png");
+        blueFlask_left = ImageLoader.loadImage("/images/blueflask_left.png");
+        blueFlask_right = ImageLoader.loadImage("/images/blueflask_right.png");
         ball = ImageLoader.loadImage("/images/ball.png");
         brick = ImageLoader.loadImage("/images/brick.png");
         //bomb = new SoundClip("/images/mono.wav");
+<<<<<<< HEAD
         colorF = ImageLoader.loadImage("/images/flask_spritesheet.jpg");
         
         //creating array of images
@@ -49,6 +50,17 @@ public class Assets {
 //        }
 //        SpreadSheet spritesheet = new SpreadSheet(colorF);
 //        colors = new BufferedImage[3];
+=======
+        flasks = new BufferedImage[3];
+        
+        for(int i = 0; i < 3; i++){
+            flasks[0] = blueFlask;
+            flasks[1] = blueFlask_left;
+            flasks[2] = blueFlask_right;
+        }
+        
+        
+>>>>>>> 0e369e62f37317538b515bdff4c79e35631595b8
     }
     
 }

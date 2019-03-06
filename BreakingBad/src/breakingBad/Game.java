@@ -32,10 +32,12 @@ public class Game implements Runnable {
     private boolean endGame;                       // to know when to end the game
     private Ball ball;                      //to use a ball
     private LinkedList<PowerUps> powerUps;
+    private LinkedList <PowerUps> pollos;
     private WriteFile wfile;
     private ReadFile rfile;
     private int score;
     private boolean pauseGame;
+    
     /**
      * to create title, width and height and set the game is still not running
      * @param title to set the title of the window
@@ -53,6 +55,7 @@ public class Game implements Runnable {
         wfile = new WriteFile(this);
         rfile = new ReadFile(this);
         powerUps = new LinkedList<PowerUps>();
+        pollos = new LinkedList<PowerUps>();
     }
 
     /**
@@ -103,6 +106,7 @@ public class Game implements Runnable {
         return powerUps;
     }
     
+    
     /**
      * 
      * @return 
@@ -150,6 +154,11 @@ public class Game implements Runnable {
     public void setScore(int score) {
         this.score = score;
     }
+
+    public LinkedList<PowerUps> getPollos() {
+        return pollos;
+    }
+    
     
     /**
      * initializing the display window of the game
@@ -161,17 +170,29 @@ public class Game implements Runnable {
          ball = new Ball(player.getX()-50, player.getY()-100, 100, 100, this);
          int iPosX = 0;
          int iPosY = 0;
-         for (int i = 1; i <= 40; i++) {
+         for (int i = 1; i <= 30; i++) {
             //create bricks in a row
             bricks.add(new Enemy(iPosX, iPosY, 100, 100, this));
             iPosX +=80;
             
             // create 10 bricks every row
-            if(i % 10 == 0){
+            if(i % 10 == 0 ){
                 iPosY +=30;
                 iPosX = 0;
             }
+            
         }
+        for(int i = 1; i <= 3; i++){
+            //creating flasks in a row
+            powerUps.add(new PowerUps(iPosX, iPosY, 100, 100, 0, 1, this));
+            iPosX += 350;
+            iPosY = 100;           
+        } 
+        for(int i = 1;  i <= 2; i++){
+            pollos.add(new PowerUps(iPosX, iPosY, 100, 100, 0 ,2, this));
+            iPosX += 100;
+            iPosY = 200;
+        } 
          lives = 3;
          endGame = false;
          display.getJframe().addKeyListener(keyManager);
@@ -249,6 +270,7 @@ public class Game implements Runnable {
             }
             player.tick();
             ball.tick();
+<<<<<<< HEAD
             if (ball.intersectaPaddle(player)) {
                 ball.setDirectionY(-1);
                 if (ball.getX() + ball.getWidth()/2 < player.getX() + player.getWidth()/2) {
@@ -256,6 +278,18 @@ public class Game implements Runnable {
                 } else {
                     ball.setDirectionX(1);
                 }
+=======
+            
+            //ticking all powerups
+            for(int i = 0; i < powerUps.size(); i++){
+                PowerUps powerUp = powerUps.get(i);
+                powerUp.tick();
+            }
+            //icking all pollos
+            for(int i = 0; i < pollos.size(); i++){
+                PowerUps pollo = pollos.get(i);
+                pollo.tick();
+>>>>>>> 0e369e62f37317538b515bdff4c79e35631595b8
             }
             //ticking all bricks
             for (int i = 0; i < bricks.size(); i++) {
@@ -316,10 +350,25 @@ public class Game implements Runnable {
                 
                 //rendering all bricks
                 for (int i = 0; i < bricks.size(); i++) {
+<<<<<<< HEAD
                     Enemy brick = bricks.get(i);
                     if (!brick.isDestroyed()) {
                         brick.render(g);
                     }
+=======
+                Enemy brick = bricks.get(i);
+                brick.render(g);
+            }
+                //rendering powerups
+                for(int i = 0; i < powerUps.size(); i++){
+                    PowerUps powerUp = powerUps.get(i);
+                    powerUp.render(g);
+                }
+                //rendering all pollos
+                for(int i = 0; i < pollos.size(); i++){
+                    PowerUps pollo = pollos.get(i);
+                    pollo.render(g);
+>>>>>>> 0e369e62f37317538b515bdff4c79e35631595b8
                 }
             }
             bs.show();
