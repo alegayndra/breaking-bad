@@ -8,7 +8,7 @@ Todo list:
   - Hacer que bote
 - Los pollos y los flasks
   - Crear clase **DONE**
-  - Ponerlos en el juego
+  - Ponerlos en el juego DONE 1/2 FALTAN COLISIONES
 - Crear los bloques (Game) **DONE**
 - Animar (La clase aparte y en cada clase que necesite una animación)
 - Pausar, guardar y cargar y reiniciar el juego (Game)

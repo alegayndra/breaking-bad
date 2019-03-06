@@ -21,12 +21,12 @@ public class PowerUps extends Item{
     private Game game;
     private Animation animateFlasks;
     
-    public PowerUps (int x, int y, int width, int height, int speed , int type, Game game) {
+    public PowerUps (int x, int y, int width, int height, int speed ,int direction, int type, Game game) {
         super(x, y);
         this.width = width;
         this.height = height;
         this.speed = speed;
-        this.direction = 1;
+        this.direction = direction;
         this.type = type;
         this.game = game;
         this.animateFlasks = new Animation(Assets.flasks,100);
@@ -130,18 +130,12 @@ public class PowerUps extends Item{
         this.animateFlasks.tick();
         
         // checks that the object does not goes out of the bounds
-        if (getX() + 60 >= game.getWidth()) {
-            setX(game.getWidth() - this.getWidth());
-        }
-        else if (getX() <= -30) {
-            setX(0);
-        }
-        if (getY() + 80 >= game.getHeight()) {
-            setY(game.getHeight() - this.getHeight());
-        }
-        else if (getY() <= -20) {
-            setY(0);
-        }
+        if (getX() + getWidth() >= game.getWidth()) {
+                setDirection(-1);
+            }
+            else if (getX() <= 0) {
+                setDirection(1);
+            }
     }
     
 

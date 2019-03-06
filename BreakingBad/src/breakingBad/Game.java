@@ -8,7 +8,9 @@ package breakingBad;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 /**
  *
@@ -31,10 +33,11 @@ public class Game implements Runnable {
     private Ball ball;                      //to use a ball
     private LinkedList<PowerUps> powerUps;
     private LinkedList <PowerUps> pollos;
-    private WriteFile wfile;
-    private ReadFile rfile;
+    private WriteFile wFile;
+    private ReadFile rFile;
     private int score;
     private boolean pauseGame;
+    private int cantBricks;
     
     /**
      * to create title, width and height and set the game is still not running
@@ -50,8 +53,8 @@ public class Game implements Runnable {
         keyManager = new KeyManager();
         //mouseManager = new MouseManager();
         bricks = new LinkedList<Enemy>();
-        wfile = new WriteFile(this);
-        rfile = new ReadFile(this);
+        wFile = new WriteFile(this);
+        rFile = new ReadFile(this);
         powerUps = new LinkedList<PowerUps>();
         pollos = new LinkedList<PowerUps>();
     }
@@ -182,15 +185,19 @@ public class Game implements Runnable {
         }
         for(int i = 1; i <= 3; i++){
             //creating flasks in a row
-            powerUps.add(new PowerUps(iPosX, iPosY, 100, 100, 0, 1, this));
-            iPosX += 350;
+            int dirX = (int) (Math.random() * 2-1)+1;
+            powerUps.add(new PowerUps(iPosX, iPosY, 100, 100, 2, dirX, 1, this));
+            iPosX += 300;
             iPosY = 100;           
         } 
+        iPosX-=200;
         for(int i = 1;  i <= 2; i++){
-            pollos.add(new PowerUps(iPosX, iPosY, 100, 100, 0 ,2, this));
-            iPosX += 100;
-            iPosY = 200;
+            int dirX = (int) (Math.random() * 2-1)+1;
+            pollos.add(new PowerUps(iPosX, iPosY, 100, 100, 1, dirX ,2, this));
+            //iPosX += 100;
+            iPosY += 50;
         } 
+        cantBricks = 30;
          lives = 3;
          endGame = false;
          display.getJframe().addKeyListener(keyManager);
@@ -237,9 +244,33 @@ public class Game implements Runnable {
         if (getKeyManager().pause) {
             pauseGame = !pauseGame;
         }
-        if (getKeyManager().restart) {
-            init();
+        if (getKeyManager().save) {
+            wFile.writeFile();
+        } 
+        if (getKeyManager().load) {
+            rFile.readFile();
         }
+        if (getKeyManager().restart) {
+            player = new Player(getWidth() / 2, getHeight() -100, 1, 100, 100, this);
+            ball = new Ball(player.getX()-50, player.getY()-100, 100, 100, this);
+            int iPosX = 0;
+            int iPosY = 0;
+            for (int i = 1; i <= 40; i++) {
+               //create bricks in a row
+               bricks.add(new Enemy(iPosX, iPosY, 100, 100, this));
+               iPosX +=80;
+
+               // create 10 bricks every row
+               if(i % 10 == 0){
+                   iPosY +=30;
+                   iPosX = 0;
+               }
+            }
+            lives = 3;
+            endGame = false;
+            display.getJframe().addKeyListener(keyManager);
+            pauseGame = false;
+         }
         // avancing player with colision
         if (!endGame && !pauseGame) {
             
@@ -249,7 +280,6 @@ public class Game implements Runnable {
                 ball.setDirectionY(-1);
             }
             player.tick();
-            ball.tick();
             
             //ticking all powerups
             for(int i = 0; i < powerUps.size(); i++){
@@ -261,33 +291,57 @@ public class Game implements Runnable {
                 PowerUps pollo = pollos.get(i);
                 pollo.tick();
             }
+            
+            // ticking the ball
+            ball.tick();
+            
+            // checking all collisions of the ball
+            // collision with paddle
+            if (ball.intersectaPaddle(player)) {
+                ball.setDirectionY(-1);
+                if (ball.getX() + ball.getWidth()/2 < player.getX() + player.getWidth()/2) {
+                    ball.setDirectionX(-1);
+                } else {
+                    ball.setDirectionX(1);
+                }
+            }
             //ticking all bricks
             for (int i = 0; i < bricks.size(); i++) {
                 Enemy brick =  bricks.get(i);
-                if (ball.intersectaBloque(brick)) {
-                    if (ball.getX() + ball.getSpeed() * ball.getDirectionX() <= brick.getX() + brick.getWidth()) {
-                        ball.setDirectionX(1);
-                    } else if (ball.getX() + ball.getWidth() + ball.getSpeed() * ball.getDirectionX()  >= brick.getX()) {
-                        ball.setDirectionX(-1);
-                    } else if (ball.getY() > brick.getY()) {
-                        ball.setDirectionY(-1);
-                    } else {
+                if (!brick.isDestroyed()) {
+                    if (ball.intersectaBloque(brick)) {
+//                    if (ball.getX() + ball.getSpeed() * ball.getDirectionX() <= brick.getX() + brick.getWidth()) {
+//                        ball.setDirectionX(1);
+//                    } else if (ball.getX() + ball.getWidth() + ball.getSpeed() * ball.getDirectionX()  >= brick.getX()) {
+//                        ball.setDirectionX(-1);
+//                    } else 
+                        if (ball.getY() > brick.getY()) {
+                            ball.setDirectionY(-1);
+                        } else {
+                            ball.setDirectionY(1);
+                        }
                         ball.setDirectionY(1);
+                        brick.setDestroyed(true);
+                        cantBricks--;
                     }
                 }
             }
+            if (cantBricks == 0) {
+                endGame = true;
+            }
             if (ball.getY() + ball.getHeight() >= getHeight()) {
-//                lives--;
-//                if(lives == 0) {
-//                    endGame = true;
-//                } else {
+                lives--;
+                if(lives == 0) {
+                    endGame = true;
+                } else {
                     ball.setX(player.getX() - ball.getWidth() / 2);
                     ball.setY(player.getY() - ball.getHeight());
                     ball.setMoving(false);
-//                }
+                }
             }
         }
     }
+    
 
     private void render() {
         // get the buffer strategy from the display
@@ -313,8 +367,10 @@ public class Game implements Runnable {
                 
                 //rendering all bricks
                 for (int i = 0; i < bricks.size(); i++) {
-                Enemy brick = bricks.get(i);
-                brick.render(g);
+                    Enemy brick = bricks.get(i);
+                    if (!brick.isDestroyed()) {
+                        brick.render(g);
+                    }
             }
                 //rendering powerups
                 for(int i = 0; i < powerUps.size(); i++){
