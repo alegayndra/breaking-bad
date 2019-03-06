@@ -19,6 +19,7 @@ public class PowerUps extends Item{
     private int direction;
     private int type;
     private Game game;
+    private Animation animateFlasks;
     
     public PowerUps (int x, int y, int width, int height, int speed , int type, Game game) {
         super(x, y);
@@ -28,6 +29,7 @@ public class PowerUps extends Item{
         this.direction = 1;
         this.type = type;
         this.game = game;
+        this.animateFlasks = new Animation(Assets.flasks,100);
     }
 
     /**
@@ -122,6 +124,8 @@ public class PowerUps extends Item{
     public void tick() {
         setX(getX() + getSpeed() * getDirection());
         
+        this.animateFlasks.tick();
+        
         // checks that the object does not goes out of the bounds
         if (getX() + 60 >= game.getWidth()) {
             setX(game.getWidth() - this.getWidth());
@@ -140,7 +144,7 @@ public class PowerUps extends Item{
     @Override
     public void render(Graphics g) {
         if (type == 1) {
-            g.drawImage(Assets.blueFlask, getX(), getY(), getWidth(), getHeight(), null);
+            g.drawImage(animateFlasks.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
         } else {
             g.drawImage(Assets.pollos, getX(), getY(), getWidth(), getHeight(), null);
         }

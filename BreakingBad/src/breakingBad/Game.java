@@ -34,6 +34,7 @@ public class Game implements Runnable {
     private ReadFile rfile;
     private int score;
     private boolean pauseGame;
+    
     /**
      * to create title, width and height and set the game is still not running
      * @param title to set the title of the window
@@ -159,17 +160,25 @@ public class Game implements Runnable {
          ball = new Ball(player.getX()-50, player.getY()-100, 100, 100, this);
          int iPosX = 0;
          int iPosY = 0;
-         for (int i = 1; i <= 40; i++) {
+         for (int i = 1; i <= 30; i++) {
             //create bricks in a row
             bricks.add(new Enemy(iPosX, iPosY, 100, 100, this));
             iPosX +=80;
             
             // create 10 bricks every row
-            if(i % 10 == 0){
+            if(i % 10 == 0 ){
                 iPosY +=30;
                 iPosX = 0;
             }
+            
         }
+        for(int i = 1; i <= 3; i++){
+            //creating flasks in a row
+            powerUps.add(new PowerUps(iPosX, iPosY, 100, 100, 1, 1, this));
+            iPosX += 200;
+            iPosY = 100;           
+        } 
+         
          lives = 3;
          endGame = false;
          display.getJframe().addKeyListener(keyManager);
@@ -229,6 +238,13 @@ public class Game implements Runnable {
             }
             player.tick();
             ball.tick();
+            
+            //ticking all powerups
+            for(int i = 0; i < powerUps.size(); i++){
+                PowerUps powerUp = powerUps.get(i);
+                powerUp.tick();
+            }
+            
             //ticking all bricks
             for (int i = 0; i < bricks.size(); i++) {
                 Enemy brick =  bricks.get(i);
@@ -284,6 +300,11 @@ public class Game implements Runnable {
                 Enemy brick = bricks.get(i);
                 brick.render(g);
             }
+                //rendering powerups
+                for(int i = 0; i < powerUps.size(); i++){
+                    PowerUps powerUp = powerUps.get(i);
+                    powerUp.render(g);
+                }
             }
             bs.show();
             g.dispose();
