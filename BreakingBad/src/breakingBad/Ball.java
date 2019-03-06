@@ -170,17 +170,17 @@ public class Ball extends Item{
             setY(getY() + getDirectionY() * getSpeed());
 
             // checks that the object does not goes out of the bounds
-            if (getX() + 60 >= game.getWidth()) {
+            if (getX() + getWidth() >= game.getWidth()) {
                 setDirectionX(-1);
             }
-            else if (getX() <= -30) {
+            else if (getX() <= 0) {
                 setDirectionX(1);
             }
-            if (getY() + 80 >= game.getHeight()) {
-                setDirectionX(-1);
+            if (getY() + getHeight() >= game.getHeight()) {
+                setDirectionY(-1);
             }
-            else if (getY() <= -20) {
-                setDirectionX(1);
+            else if (getY() <= 0) {
+                setDirectionY(1);
             }
         } else {
             setX(game.getPlayer().getX() - getWidth() / 2);

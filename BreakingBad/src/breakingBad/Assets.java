@@ -37,8 +37,7 @@ public class Assets {
         ball = ImageLoader.loadImage("/images/ball.png");
         brick = ImageLoader.loadImage("/images/brick.png");
         //bomb = new SoundClip("/images/mono.wav");
-<<<<<<< HEAD
-        colorF = ImageLoader.loadImage("/images/flask_spritesheet.jpg");
+//        colorF = ImageLoader.loadImage("/images/flask_spritesheet.jpg");
         
         //creating array of images
 //        SpreadSheet spritesheet = new SpreadSheet(colorF);
@@ -50,7 +49,6 @@ public class Assets {
 //        }
 //        SpreadSheet spritesheet = new SpreadSheet(colorF);
 //        colors = new BufferedImage[3];
-=======
         flasks = new BufferedImage[3];
         
         for(int i = 0; i < 3; i++){
@@ -58,9 +56,6 @@ public class Assets {
             flasks[1] = blueFlask_left;
             flasks[2] = blueFlask_right;
         }
-        
-        
->>>>>>> 0e369e62f37317538b515bdff4c79e35631595b8
     }
     
 }
