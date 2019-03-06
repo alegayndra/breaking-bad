@@ -27,6 +27,13 @@ public class ReadFile {
         int x, y, width, height, directionX, directionY, type, score, lives;
         boolean destroyed, endGame;
         
+        /*
+        player
+        bricks
+        ball
+        powerUps
+        game
+        */
         try {
             // Leemos el contenido del fichero
             System.out.println("... Leemos el contenido del fichero ...");

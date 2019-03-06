@@ -30,6 +30,10 @@ public class Game implements Runnable {
     private int lives;                                         // to count the remaining lives of the player
     private boolean endGame;                       // to know when to end the game
     private Ball ball;                      //to use a ball
+    private LinkedList<PowerUps> powerUps;
+    private WriteFile wfile;
+    private ReadFile rfile;
+    private int score;
     /**
      * to create title, width and height and set the game is still not running
      * @param title to set the title of the window
@@ -44,6 +48,9 @@ public class Game implements Runnable {
         keyManager = new KeyManager();
         //mouseManager = new MouseManager();
         bricks = new LinkedList<Enemy>();
+        wfile = new WriteFile(this);
+        rfile = new ReadFile(this);
+        powerUps = new LinkedList<PowerUps>();
     }
 
     /**
@@ -62,6 +69,46 @@ public class Game implements Runnable {
         return height;
     }
 
+    public LinkedList<Enemy> getBricks() {
+        return bricks;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Ball getBall() {
+        return ball;
+    }
+
+    public LinkedList<PowerUps> getPowerUps() {
+        return powerUps;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public boolean isEndGame() {
+        return endGame;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setEndGame(boolean endGame) {
+        this.endGame = endGame;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+    
     /**
      * initializing the display window of the game
      */
