@@ -22,8 +22,8 @@ public class Assets {
     //public static SoundClip bomb;           // to store the sound of the bomb
     
     //to store flask color
-//    public static BufferedImage colorF;
-//    public static BufferedImage colors[];
+    public static BufferedImage colorF;
+    public static BufferedImage colors[];
 // 
     /**
      * initializing the images of the game
@@ -36,7 +36,8 @@ public class Assets {
         greenFlask = ImageLoader.loadImage("/images/flask1.png");
         ball = ImageLoader.loadImage("/images/ball.png");
         brick = ImageLoader.loadImage("/images/brick.png");
-        //bomb = new SoundClip("/images/mono.wav"); 
+        //bomb = new SoundClip("/images/mono.wav");
+        colorF = ImageLoader.loadImage("/images/flask_spritesheet.jpg");
         
         //creating array of images
 //        SpreadSheet spritesheet = new SpreadSheet(colorF);
@@ -46,6 +47,9 @@ public class Assets {
 //        for(int i = 0; i < 9; i++){
 //            colors[i] = spritesheet.crop(i*64, 0, 64, 64);
 //        }
+        SpreadSheet spritesheet = new SpreadSheet(colorF);
+        colors = new BufferedImage[3];
+        
         
         
     }
