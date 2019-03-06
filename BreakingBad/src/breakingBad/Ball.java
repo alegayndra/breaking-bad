@@ -19,6 +19,7 @@ public class Ball extends Item{
     private int directionX;         // to know the direction in the x axis of tha ball
     private int directionY;         // to know the direction in the y axis of tha ball
     private Game game;          // to know the game of the player
+    private boolean moving;
     
     /**
      * To create position, width, height, direction in the x and y axis, speed and game
@@ -36,8 +37,8 @@ public class Ball extends Item{
         this.directionX = 1;
         this.directionY = 0;
         this.game = game;
+        moving = false;
     }
-
 
     /**
      * To get the width of the ball
@@ -118,6 +119,14 @@ public class Ball extends Item{
     public void setDirectionY(int directionY) {
         this.directionY = directionY;
     }
+
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
+    }
     
     /**
      * To get a rectangle with the position, width, and height of the ball
@@ -126,37 +135,56 @@ public class Ball extends Item{
     public Rectangle getPerimetro() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
-    
+    /**
+     * 
+     * @param obj
+     * @return 
+     */
     public boolean intersectaPaddle(Object obj) {
         return ((obj instanceof Player) && (getPerimetro().intersects(((Player) obj).getPerimetro())));
      }
     
+    /**
+     * 
+     * @param obj
+     * @return 
+     */
     public boolean intersectaPowerUp(Object obj) {
         return ((obj instanceof PowerUps) && (getPerimetro().intersects(((PowerUps) obj).getPerimetro())));
      }
     
+    /**
+     * 
+     * @param obj
+     * @return 
+     */
     public boolean intersectaBloque(Object obj) {
         return ((obj instanceof Enemy) && (getPerimetro().intersects(((Enemy) obj).getPerimetro())));
      }
     
     @Override
     public void tick() {
-        // updates the position of the ball
-        setX(getX() + getDirectionX() * getSpeed());
-        setY(getY() + getDirectionY() * getSpeed());
-        
-        // checks that the object does not goes out of the bounds
-        if (getX() + 60 >= game.getWidth()) {
-            setDirectionX(-1);
-        }
-        else if (getX() <= -30) {
-            setDirectionX(1);
-        }
-        if (getY() + 80 >= game.getHeight()) {
-            setDirectionX(-1);
-        }
-        else if (getY() <= -20) {
-            setDirectionX(1);
+        if (moving) {
+             // updates the position of the ball
+            setX(getX() + getDirectionX() * getSpeed());
+            setY(getY() + getDirectionY() * getSpeed());
+
+            // checks that the object does not goes out of the bounds
+            if (getX() + 60 >= game.getWidth()) {
+                setDirectionX(-1);
+            }
+            else if (getX() <= -30) {
+                setDirectionX(1);
+            }
+            if (getY() + 80 >= game.getHeight()) {
+                setDirectionX(-1);
+            }
+            else if (getY() <= -20) {
+                setDirectionX(1);
+            }
+        } else {
+            setX(game.getPlayer().getX() - getWidth() / 2);
+            setY(game.getPlayer().getY() - getHeight());
         }
     }
 

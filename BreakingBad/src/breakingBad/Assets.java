@@ -22,9 +22,9 @@ public class Assets {
     //public static SoundClip bomb;           // to store the sound of the bomb
     
     //to store flask color
-    public static BufferedImage colorF;
-    public static BufferedImage colors[];
- 
+//    public static BufferedImage colorF;
+//    public static BufferedImage colors[];
+// 
     /**
      * initializing the images of the game
      */
@@ -39,13 +39,13 @@ public class Assets {
         //bomb = new SoundClip("/images/mono.wav"); 
         
         //creating array of images
-        SpreadSheet spritesheet = new SpreadSheet(colorF);
-        colors = new BufferedImage[9];
+//        SpreadSheet spritesheet = new SpreadSheet(colorF);
+//        colors = new BufferedImage[9];
         
         //cropping pictures from the sheet into the array
-        for(int i = 0; i < 9; i++){
-            colors[i] = spritesheet.crop(i*64, 0, 64, 64);
-        }
+//        for(int i = 0; i < 9; i++){
+//            colors[i] = spritesheet.crop(i*64, 0, 64, 64);
+//        }
         
         
     }

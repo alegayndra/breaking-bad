@@ -25,7 +25,6 @@ public class Game implements Runnable {
     private boolean running;                           // to set the game
     private Player player;                                // to use a player
     private KeyManager keyManager;            // to manage the keyboard
-    //private MouseManager mouseManager;  // to manage the mouse
     private LinkedList<Enemy> bricks;                              // to move an enemy
     private int lives;                                         // to count the remaining lives of the player
     private boolean endGame;                       // to know when to end the game
@@ -34,6 +33,7 @@ public class Game implements Runnable {
     private WriteFile wfile;
     private ReadFile rfile;
     private int score;
+    private boolean pauseGame;
     /**
      * to create title, width and height and set the game is still not running
      * @param title to set the title of the window
@@ -68,43 +68,83 @@ public class Game implements Runnable {
     public int getHeight() {
         return height;
     }
-
+    
+    /**
+     * 
+     * @return 
+     */
     public LinkedList<Enemy> getBricks() {
         return bricks;
     }
-
+    
+    /**
+     * 
+     * @return 
+     */
     public Player getPlayer() {
         return player;
     }
-
+    
+    /**
+     * 
+     * @return 
+     */
     public Ball getBall() {
         return ball;
     }
-
+    
+    /**
+     * 
+     * @return 
+     */
     public LinkedList<PowerUps> getPowerUps() {
         return powerUps;
     }
-
+    
+    /**
+     * 
+     * @return 
+     */
     public int getLives() {
         return lives;
     }
-
+    
+    /**
+     * 
+     * @return 
+     */
     public boolean isEndGame() {
         return endGame;
     }
-
+    
+    /**
+     * 
+     * @return 
+     */
     public int getScore() {
         return score;
     }
-
+    
+    /**
+     * 
+     * @param endGame 
+     */
     public void setEndGame(boolean endGame) {
         this.endGame = endGame;
     }
-
+    
+    /**
+     * 
+     * @param lives 
+     */
     public void setLives(int lives) {
         this.lives = lives;
     }
-
+    
+    /**
+     * 
+     * @param score 
+     */
     public void setScore(int score) {
         this.score = score;
     }
@@ -116,12 +156,10 @@ public class Game implements Runnable {
          display = new Display(title, getWidth(), getHeight());
          Assets.init();
          player = new Player(getWidth() / 2, getHeight() -100, 1, 100, 100, this);
-         ball = new Ball(player.getX(), player.getY()-20, 100, 100, this);
-        // iPosX = (int) (Math.random() * getWidth() * 0.2d + 0.8d * getWidth());
-        // enemy = new Enemy(200, 200, 100, 100, this);
+         ball = new Ball(player.getX()-50, player.getY()-100, 100, 100, this);
          int iPosX = 0;
          int iPosY = 0;
-        for (int i = 1; i <= 40; i++) {
+         for (int i = 1; i <= 40; i++) {
             //create bricks in a row
             bricks.add(new Enemy(iPosX, iPosY, 100, 100, this));
             iPosX +=80;
@@ -135,10 +173,7 @@ public class Game implements Runnable {
          lives = 3;
          endGame = false;
          display.getJframe().addKeyListener(keyManager);
-//         display.getJframe().addMouseListener(mouseManager);
-//         display.getJframe().addMouseMotionListener(mouseManager);
-//         display.getCanvas().addMouseListener(mouseManager);
-//         display.getCanvas().addMouseMotionListener(mouseManager);
+         pauseGame = false;
     }
 
     @Override
@@ -176,39 +211,50 @@ public class Game implements Runnable {
         return keyManager;
     }
 
-//    public MouseManager getMouseManager() {
-//        return mouseManager;
-//    }
-
     private void tick() {
         keyManager.tick();
+        if (getKeyManager().pause) {
+            pauseGame = !pauseGame;
+        }
+        if (getKeyManager().restart) {
+            init();
+        }
         // avancing player with colision
-        if (!endGame) {
+        if (!endGame && !pauseGame) {
+            
+            if (getKeyManager().moveBall && !ball.isMoving()) {
+                ball.setMoving(true);
+                ball.setSpeed(2);
+                ball.setDirectionY(-1);
+            }
             player.tick();
             ball.tick();
             //ticking all bricks
             for (int i = 0; i < bricks.size(); i++) {
-            Enemy brick =  bricks.get(i);
-            brick.tick();
-        }
-        if (player.intersecta(bricks)) {
-            lives--;
-            //Assets.bomb.play();
-            if(lives == 0) {
-                endGame = true;
-            } else {
-               /* int iPosX = (int) (Math.random() * getWidth() * 0.2d);
-                int iPosY = (int) (Math.random() * (getHeight() - 100));
-                player.setX(iPosX);
-                player.setY(iPosY);
-                iPosX = (int) (Math.random() * getWidth() * 0.2d + 0.8d * getWidth());
-                enemy.setX(iPosX);
-                enemy.setY(iPosY);
-                enemy.setSpeed(enemy.getSpeed() + 1);
-                */
+                Enemy brick =  bricks.get(i);
+                if (ball.intersectaBloque(brick)) {
+                    if (ball.getX() + ball.getSpeed() * ball.getDirectionX() <= brick.getX() + brick.getWidth()) {
+                        ball.setDirectionX(1);
+                    } else if (ball.getX() + ball.getWidth() + ball.getSpeed() * ball.getDirectionX()  >= brick.getX()) {
+                        ball.setDirectionX(-1);
+                    } else if (ball.getY() > brick.getY()) {
+                        ball.setDirectionY(-1);
+                    } else {
+                        ball.setDirectionY(1);
+                    }
+                }
+            }
+            if (ball.getY() + ball.getHeight() >= getHeight()) {
+//                lives--;
+//                if(lives == 0) {
+//                    endGame = true;
+//                } else {
+                    ball.setX(player.getX() - ball.getWidth() / 2);
+                    ball.setY(player.getY() - ball.getHeight());
+                    ball.setMoving(false);
+//                }
             }
         }
-    }
     }
 
     private void render() {

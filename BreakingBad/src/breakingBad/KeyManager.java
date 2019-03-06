@@ -23,7 +23,9 @@ public class KeyManager implements KeyListener {
     public boolean lastSave;
     public boolean lastLoad;
     public boolean restart;
-
+    public boolean moveBall;
+    public boolean lastRestart;
+    
     private boolean keys[];  // to store all the flags for every key
     
     public KeyManager() {
@@ -72,8 +74,18 @@ public class KeyManager implements KeyListener {
             load = false;
         }
         
+        if (lastRestart  && !keys[KeyEvent.VK_R]) {
+            restart = true;
+        } else {
+            restart = false;
+        }
+        
+        lastPause = keys[KeyEvent.VK_P];
+        lastSave = keys[KeyEvent.VK_G];
+        lastLoad  = keys[KeyEvent.VK_C];
         left = keys[KeyEvent.VK_LEFT];
         right = keys[KeyEvent.VK_RIGHT];
-        restart = keys[KeyEvent.VK_R];
+        lastRestart = keys[KeyEvent.VK_R];
+        moveBall = keys[KeyEvent.VK_SPACE];
     }
 }
