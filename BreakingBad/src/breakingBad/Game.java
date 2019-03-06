@@ -8,7 +8,9 @@ package breakingBad;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 /**
  *
@@ -217,7 +219,25 @@ public class Game implements Runnable {
             pauseGame = !pauseGame;
         }
         if (getKeyManager().restart) {
-            init();
+            player = new Player(getWidth() / 2, getHeight() -100, 1, 100, 100, this);
+            ball = new Ball(player.getX()-50, player.getY()-100, 100, 100, this);
+            int iPosX = 0;
+            int iPosY = 0;
+            for (int i = 1; i <= 40; i++) {
+               //create bricks in a row
+               bricks.add(new Enemy(iPosX, iPosY, 100, 100, this));
+               iPosX +=80;
+
+               // create 10 bricks every row
+               if(i % 10 == 0){
+                   iPosY +=30;
+                   iPosX = 0;
+               }
+           }
+            lives = 3;
+            endGame = false;
+            display.getJframe().addKeyListener(keyManager);
+            pauseGame = false;
         }
         // avancing player with colision
         if (!endGame && !pauseGame) {
@@ -229,19 +249,30 @@ public class Game implements Runnable {
             }
             player.tick();
             ball.tick();
+            if (ball.intersectaPaddle(player)) {
+                ball.setDirectionY(-1);
+                if (ball.getX() < player.getX()+getWidth()/2) {
+                    ball.setDirectionX(-1);
+                } else {
+                    ball.setDirectionX(1);
+                }
+            }
             //ticking all bricks
             for (int i = 0; i < bricks.size(); i++) {
                 Enemy brick =  bricks.get(i);
                 if (ball.intersectaBloque(brick)) {
-                    if (ball.getX() + ball.getSpeed() * ball.getDirectionX() <= brick.getX() + brick.getWidth()) {
-                        ball.setDirectionX(1);
-                    } else if (ball.getX() + ball.getWidth() + ball.getSpeed() * ball.getDirectionX()  >= brick.getX()) {
-                        ball.setDirectionX(-1);
-                    } else if (ball.getY() > brick.getY()) {
-                        ball.setDirectionY(-1);
-                    } else {
-                        ball.setDirectionY(1);
-                    }
+//                    if (ball.getX() + ball.getSpeed() * ball.getDirectionX() <= brick.getX() + brick.getWidth()) {
+//                        ball.setDirectionX(1);
+//                    } else if (ball.getX() + ball.getWidth() + ball.getSpeed() * ball.getDirectionX()  >= brick.getX()) {
+//                        ball.setDirectionX(-1);
+//                    } else if (ball.getY() > brick.getY()) {
+//                        ball.setDirectionY(-1);
+//                    } else {
+//                        ball.setDirectionY(1);
+//                    }
+                    ball.setDirectionY(1);
+                    brick.setDestroyed(true);
+                    
                 }
             }
             if (ball.getY() + ball.getHeight() >= getHeight()) {
@@ -281,9 +312,11 @@ public class Game implements Runnable {
                 
                 //rendering all bricks
                 for (int i = 0; i < bricks.size(); i++) {
-                Enemy brick = bricks.get(i);
-                brick.render(g);
-            }
+                    Enemy brick = bricks.get(i);
+                    if (!brick.isDestroyed()) {
+                        brick.render(g);
+                    }
+                }
             }
             bs.show();
             g.dispose();
