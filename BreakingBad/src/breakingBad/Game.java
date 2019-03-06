@@ -174,8 +174,8 @@ public class Game implements Runnable {
         }
         for(int i = 1; i <= 3; i++){
             //creating flasks in a row
-            powerUps.add(new PowerUps(iPosX, iPosY, 100, 100, 1, 1, this));
-            iPosX += 200;
+            powerUps.add(new PowerUps(iPosX, iPosY, 100, 100, 0, 1, this));
+            iPosX += 350;
             iPosY = 100;           
         } 
          
