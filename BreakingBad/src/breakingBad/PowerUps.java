@@ -119,6 +119,9 @@ public class PowerUps extends Item{
     public Rectangle getPerimetro() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
+    public boolean intersecta(Object obj) {
+        return obj instanceof Ball && getPerimetro().intersects(((Ball) obj).getPerimetro());
+    }
     
     @Override
     public void tick() {
