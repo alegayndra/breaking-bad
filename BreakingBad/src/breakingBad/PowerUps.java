@@ -140,6 +140,8 @@ public class PowerUps extends Item{
             setY(0);
         }
     }
+    
+
 
     @Override
     public void render(Graphics g) {

@@ -188,8 +188,8 @@ public class Game implements Runnable {
         } 
         for(int i = 1;  i <= 2; i++){
             pollos.add(new PowerUps(iPosX, iPosY, 100, 100, 0 ,2, this));
-            iPosX += 50;
-            iPosY = 80;
+            iPosX += 100;
+            iPosY = 200;
         } 
          lives = 3;
          endGame = false;
