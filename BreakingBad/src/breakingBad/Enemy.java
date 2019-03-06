@@ -72,6 +72,10 @@ public class Enemy extends Item {
         this.height = height;
     }
 
+    public void setDestroyed(boolean destroyed) {
+        this.destroyed = destroyed;
+    }
+
     public void tick(Player player) {
         if (getX() + 60 >= game.getWidth()) {
             setX(game.getWidth() - this.getWidth());

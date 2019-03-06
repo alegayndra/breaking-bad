@@ -23,7 +23,10 @@ public class ReadFile {
         // Fichero del que queremos leer
         File file = new File("archivo.txt");
         Scanner s = null;
-
+        
+        int x, y, width, height, directionX, directionY, type, score, lives;
+        boolean destroyed, endGame;
+        
         try {
             // Leemos el contenido del fichero
             System.out.println("... Leemos el contenido del fichero ...");

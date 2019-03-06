@@ -20,7 +20,8 @@ public class WriteFile {
     
     public static void writeFile() {
 
-    String[] lineas = { "Uno", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete", "..." };
+        String[] lineas = { "Uno", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete", "..." };
+        String palabra;
 
         /** FORMA 1 DE ESCRITURA **/
         FileWriter file = null;
@@ -31,6 +32,15 @@ public class WriteFile {
             // Escribimos linea a linea en el fichero
             for (String linea : lineas) {
                 file.write(linea + "\n");
+            }
+            
+            for (int i = 0; i < game.getBricks.size(); i++) {
+                if (getBricks().get(i).isDestroyed() ) {
+                    file.write("1\n");
+                } else {
+                    file.write("0\n");
+                }
+                
             }
 
             file.close();
