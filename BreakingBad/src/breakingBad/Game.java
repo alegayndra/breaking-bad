@@ -61,8 +61,6 @@ public class Game implements Runnable {
         keyManager = new KeyManager();
         //mouseManager = new MouseManager();
         bricks = new LinkedList<Enemy>();
-        wFile = new WriteFile();
-        rFile = new ReadFile();
         powerUps = new LinkedList<PowerUps>();
         pollos = new LinkedList<PowerUps>();
         nombreArchivo = "src/breakingbad/archivo.sf";
@@ -206,7 +204,7 @@ public class Game implements Runnable {
         iPosX = 0;
         iPosY = 250;
         for(int i = 1; i <= 20; i++){
-            bricks.add(new Enemy(iPosX, iPosY, 100, 40, this));
+            bricks.add(new Enemy(iPosX, iPosY, 80, 30, this));
             iPosX += 80;
             
             //create 10 bricks every row
