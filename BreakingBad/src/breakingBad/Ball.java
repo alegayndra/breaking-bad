@@ -119,11 +119,19 @@ public class Ball extends Item{
     public void setDirectionY(int directionY) {
         this.directionY = directionY;
     }
-
+    
+    /**
+     * 
+     * @return 
+     */
     public boolean isMoving() {
         return moving;
     }
-
+    
+    /**
+     * 
+     * @param moving 
+     */
     public void setMoving(boolean moving) {
         this.moving = moving;
     }
@@ -163,6 +171,10 @@ public class Ball extends Item{
      }
     
     // Carga la información del objeto desde un string
+    /**
+     * To set the value of position and the direction both in the 'x' and 'y' axis of the ball from the file that was loaded
+     * @param datos to set all the variables
+     */
     public void loadFromString(String[] datos){
         this.x = Integer.parseInt(datos[0]);
         this.y = Integer.parseInt(datos[1]);
@@ -170,31 +182,38 @@ public class Ball extends Item{
         this.directionY = Integer.parseInt(datos[3]);
     }
     
+    /**
+     * To get all the variable that need to be stored in the file as a string
+     * @return an <code>String</code> value with all the information of the variables
+     */
     public String toString(){
         return (x+" "+y+" "+directionX + " " + directionY);
     }
     
     @Override
     public void tick() {
+        /*
+        checks if the ball is already moving
+        if it is it moves freely
+        else it follow the paddle
+        */
         if (moving) {
              // updates the position of the ball
             setX(getX() + getDirectionX() * getSpeed());
             setY(getY() + getDirectionY() * getSpeed());
 
-            // checks that the object does not goes out of the bounds
+            // checks that the ball bounces from the walls
             if (getX() + getWidth() >= game.getWidth()) {
                 setDirectionX(-1);
             }
             else if (getX() <= 0) {
                 setDirectionX(1);
             }
-            if (getY() + getHeight() >= game.getHeight()) {
-                setDirectionY(-1);
-            }
             else if (getY() <= 0) {
                 setDirectionY(1);
             }
         } else {
+            // follows the paddle
             setX(game.getPlayer().getX() + getWidth() / 2);
             setY(game.getPlayer().getY() - getHeight());
         }

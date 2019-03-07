@@ -42,8 +42,6 @@ public class Game implements Runnable {
     private Ball ball;                      //to use a ball
     private LinkedList<PowerUps> powerUps;
     private LinkedList <PowerUps> pollos;
-    private WriteFile wFile;
-    private ReadFile rFile;
     private int score;
     private boolean pauseGame;
     private int cantBricks;
@@ -63,8 +61,6 @@ public class Game implements Runnable {
         keyManager = new KeyManager();
         //mouseManager = new MouseManager();
         bricks = new LinkedList<Enemy>();
-        wFile = new WriteFile();
-        rFile = new ReadFile();
         powerUps = new LinkedList<PowerUps>();
         pollos = new LinkedList<PowerUps>();
         nombreArchivo = "src/breakingbad/archivo.sf";
@@ -87,96 +83,96 @@ public class Game implements Runnable {
     }
     
     /**
-     * 
-     * @return 
+     * To get the list of all the bricks
+     * @return an <code>LinkedList<Enemey></code> list with all the bricks
      */
     public LinkedList<Enemy> getBricks() {
         return bricks;
     }
     
     /**
-     * 
-     * @return 
+     * To get the player
+     * @return an <code>Player</code> player object
      */
     public Player getPlayer() {
         return player;
     }
     
     /**
-     * 
-     * @return 
+     * To get the ball
+     * @return an <code>Ball</code> ball object
      */
     public Ball getBall() {
         return ball;
     }
     
     /**
-     * 
-     * @return 
+     * To get the list of all the power ups
+     * @return an <code>LinkedList<PowerUps></code> list with all the power ups
      */
     public LinkedList<PowerUps> getPowerUps() {
         return powerUps;
     }
 
     /**
-     * 
-     * @return 
+     * To get the quantity of bricks that haven't been destroyed
+     * @return an <code>int</code> value with the quantity of bricks that haven't been destroyed
      */
     public int getCantBricks() {
         return cantBricks;
     }
     
     /**
-     * 
-     * @return 
+     * To get the remaining lives
+     * @return an <code>int</code> value of remaining lives
      */
     public int getLives() {
         return lives;
     }
     
     /**
-     * 
-     * @return 
+     * To check if the game has ended
+     * @return an <code>boolean</code> value of the state of the game
      */
     public boolean isEndGame() {
         return endGame;
     }
     
     /**
-     * 
-     * @return 
+     * To get the current score
+     * @return an <code>int</code> value with the score
      */
     public int getScore() {
         return score;
     }
     
     /**
-     * 
-     * @param endGame 
+     * To set if the game is ended
+     * @param endGame to set the state of the game
      */
     public void setEndGame(boolean endGame) {
         this.endGame = endGame;
     }
     
     /**
-     * 
-     * @param lives 
+     * To set the lives
+     * @param lives to set the lives
      */
     public void setLives(int lives) {
         this.lives = lives;
     }
     
     /**
-     * 
-     * @param score 
+     * To set the score
+     * @param score to set the score
      */
     public void setScore(int score) {
         this.score = score;
     }
 
     /**
-     * 
-     * @return 
+     * To get the list of all the power downs
+     * @return an <code>LinkedList<PowerUps></code> list of all the power downs
      */
     public LinkedList<PowerUps> getPollos() {
         return pollos;
@@ -208,7 +204,7 @@ public class Game implements Runnable {
         iPosX = 0;
         iPosY = 250;
         for(int i = 1; i <= 20; i++){
-            bricks.add(new Enemy(iPosX, iPosY, 100, 40, this));
+            bricks.add(new Enemy(iPosX, iPosY, 80, 30, this));
             iPosX += 80;
             
             //create 10 bricks every row
@@ -284,7 +280,6 @@ public class Game implements Runnable {
             pauseGame = !pauseGame;
         }
         if (getKeyManager().save) {
-//            wFile.writeFile(this);
             try {
                 grabarArchivo();
             } catch (IOException ex) {
@@ -292,7 +287,6 @@ public class Game implements Runnable {
             }
         } 
         if (getKeyManager().load) {
-//            rFile.readFile(this);
             try {
                     leeArchivo();
                 } catch (IOException ex) {
@@ -301,18 +295,22 @@ public class Game implements Runnable {
         }
         
         // checks flag for restarting and if that the game has ended
-        if (getKeyManager().restart) {// && endGame) {
+        if (getKeyManager().restart && endGame) {
             
+            // resets the paddle position
             player.setX(getWidth() / 2);
             player.setY(getHeight() - player.getHeight());
             
+            // resets the ball position and sets it to follow the paddle
             ball.setX(player.getX() + player.getWidth() / 2);
             ball.setY(player.getY() - player.getHeight());
             ball.setMoving(false);
             
+            // sets the initial position for the bricks
             int iPosX = 0;
             int iPosY = 0;
             
+            // resets all bricks
             for (int i = 0; i < bricks.size(); i++) {
                 System.out.println(i + "\n" + iPosX + " " + iPosY);
                //create bricks in a row
@@ -331,6 +329,7 @@ public class Game implements Runnable {
             iPosY = 100;
             iPosX = 0;
             
+           // resets all flasks
            for(int i = 0; i < 3; i++){
                //creating flasks in a row
                PowerUps flask = powerUps.get(i);
@@ -343,6 +342,7 @@ public class Game implements Runnable {
            
            iPosX-=200;
            
+           // reset all chickens
            for(int i = 0;  i < 2; i++){
                PowerUps pollo = pollos.get(i);
                int dirX = (int) (Math.random() * 2-1)+1;
@@ -352,6 +352,7 @@ public class Game implements Runnable {
                iPosY += 50;
            }
            
+           // resets game variables
            cantBricks = bricks.size();
            lives = 3;
            endGame = false;
