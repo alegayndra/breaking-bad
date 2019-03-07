@@ -22,6 +22,17 @@ public class PowerUps extends Item{
     private Animation animateFlasks;
     private boolean destroyed;
     
+    /**
+     * to create direction, width, height, type, speed, animation, and game and set the power ups are not moving
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param speed
+     * @param direction
+     * @param type
+     * @param game 
+     */
     public PowerUps (int x, int y, int width, int height, int speed ,int direction, int type, Game game) {
         super(x, y);
         this.width = width;
@@ -31,6 +42,7 @@ public class PowerUps extends Item{
         this.type = type;
         this.game = game;
         this.animateFlasks = new Animation(Assets.flasks,100);
+        this.destroyed = false;
     }
 
     /**
@@ -72,16 +84,19 @@ public class PowerUps extends Item{
     public int getType() {
         return type;
     }
-
-     /**
-     * To set the width of the power up
-     * @param width to set the width of the power up
+     
+    /**
+     * To know if the power up has been destroyed
+     * @return an <code>boolean</code> value of the state of the power up
      */
-    
     public boolean isDestroyed() {
         return destroyed;
     }
 
+   /**
+     * To set the width of the power up
+     * @param width to set the width of the power up
+     */
     public void setWidth(int width) {
         this.width = width;
     }
@@ -118,16 +133,12 @@ public class PowerUps extends Item{
         this.type = type;
     }
 
+    /**
+     * To know if the power up has been destroyed
+     * @param destroyed to set destroyed
+     */
     public void setDestroyed(boolean destroyed) {
         this.destroyed = destroyed;
-    }
-    
-     public void loadFromString(String[] datos){
-        this.destroyed = (Integer.parseInt(datos[0]) == 1 ? true : false);
-    }
-    
-    public String toString(){
-        return ((destroyed ? "1":"0"));
     }
 
        /**
@@ -138,35 +149,27 @@ public class PowerUps extends Item{
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
     
-    /**
-     * 
-     * @param obj
-     * @return 
-     */
-    public boolean intersecta(Object obj) {
-        return obj instanceof Ball && getPerimetro().intersects(((Ball) obj).getPerimetro());
-    }
-    
     // Carga la información del objeto desde un string
     /**
      * To set the value of the position in the x axis and the direction of the power up from the file that was loaded
      * @param datos to set all the variables
      */
-    /*
+   
     public void loadFromString(String[] datos){
         this.x = Integer.parseInt(datos[0]);
         this.direction = Integer.parseInt(datos[1]);
+        this.destroyed = (Integer.parseInt(datos[2]) == 1 ? true : false);
     }
     
     /**
      * To get all the variable that need to be stored in the file as a string
      * @return an <code>String</code> value with all the information of the variables
      */
-    /*
+    
     public String toString(){
-        return (x+" "+direction);
+        return (x+" "+direction + " " + (destroyed ? "1" : "0"));
     }
-    */
+    
     
     @Override
     public void tick() {
@@ -184,8 +187,6 @@ public class PowerUps extends Item{
                 setDirection(1);
             }
     }
-    
-
 
     @Override
     public void render(Graphics g) {

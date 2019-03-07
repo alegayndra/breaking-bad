@@ -218,7 +218,7 @@ public class Game implements Runnable {
         for(int i = 1; i <= 3; i++){
             //creating flasks in a row
             int dirX = (int) (Math.random() * 2-1)+1;
-            powerUps.add(new PowerUps(iPosX, iPosY, iPosY, 100, 3, dirX, 1, this));
+            powerUps.add(new PowerUps(iPosX, iPosY, 100, 100, 3, dirX, 1, this));
             iPosX += 300;
             
         } 
@@ -372,37 +372,39 @@ public class Game implements Runnable {
             // ticks the player
             player.tick();
             
+            // ticking the ball
+            ball.tick();
+            
+            // checking all collisions of the ball
+            
             //ticking all powerups
             for(int i = 0; i < powerUps.size(); i++){
                 PowerUps powerUp = powerUps.get(i);
+                powerUp.tick();
                 //checking collisions with power ups
                  if(ball.intersectaPowerUp(powerUp)){
+                     
                   powerUp.setDestroyed(true);
                   //reward for touching flaks
                   player.setWidth((int) (getWidth() * (0.2)));
                   
                 }
-                powerUp.tick();
+               
             }
             //icking all pollos
             for(int i = 0; i < pollos.size(); i++){
                 PowerUps pollo = pollos.get(i);
+                pollo.tick();
                 //checking collisions with pollos
                 if(ball.intersectaPowerUp(pollo)){
+                    
                   pollo.setDestroyed(true);
                   //punishment for touching pollo
                   ball.setSpeed(ball.getSpeed() +1);
                     
                 }
-                pollo.tick();
             }
             
-           
-            
-            // ticking the ball
-            ball.tick();
-            
-            // checking all collisions of the ball
             // collision with paddle
             if (ball.intersectaPaddle(player)) {
                 ball.setDirectionY(-1);
@@ -419,15 +421,10 @@ public class Game implements Runnable {
                 // collision with bricks
                 if (!brick.isDestroyed()) {
                     if (ball.intersectaBloque(brick)) {
-//                    if (ball.getX() + ball.getSpeed() * ball.getDirectionX() <= brick.getX() + brick.getWidth()) {
-//                        ball.setDirectionX(1);
-//                    } else if (ball.getX() + ball.getWidth() + ball.getSpeed() * ball.getDirectionX()  >= brick.getX()) {
-//                        ball.setDirectionX(-1);
-//                    } else 
-                        if (ball.getY() > brick.getY()) {
-                            ball.setDirectionY(-1);
-                        } else {
+                        if (ball.getY() > brick.getY() + brick.getHeight()/2) {
                             ball.setDirectionY(1);
+                        } else {
+                            ball.setDirectionY(-1);
                         }
                         ball.setDirectionY(1);
                         brick.setDestroyed(true);

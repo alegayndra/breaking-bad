@@ -19,7 +19,7 @@ public class Ball extends Item{
     private int directionX;         // to know the direction in the x axis of tha ball
     private int directionY;         // to know the direction in the y axis of tha ball
     private Game game;          // to know the game of the player
-    private boolean moving;
+    private boolean moving;     // flag to know if the ball is moving
     
     /**
      * To create position, width, height, direction in the x and y axis, speed and game
@@ -121,16 +121,16 @@ public class Ball extends Item{
     }
     
     /**
-     * 
-     * @return 
+     * To know if the ball is moving
+     * @return an <code>boolean</code> value with the state of the ball
      */
     public boolean isMoving() {
         return moving;
     }
     
     /**
-     * 
-     * @param moving 
+     * To set if the ball is moving
+     * @param moving to set moving
      */
     public void setMoving(boolean moving) {
         this.moving = moving;
@@ -144,27 +144,27 @@ public class Ball extends Item{
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
     /**
-     * 
-     * @param obj
-     * @return 
+     * To know if the ball is intersecting with the paddle
+     * @param obj to know if the ball is intersecting with it
+     * @return an <code>boolean</code> value with the state of the collision
      */
     public boolean intersectaPaddle(Object obj) {
         return ((obj instanceof Player) && (getPerimetro().intersects(((Player) obj).getPerimetro())));
      }
     
     /**
-     * 
-     * @param obj
-     * @return 
+     * To know if the ball is intersecting with the power ups
+     * @param obj to know if the ball is intersecting with it
+     * @return an <code>boolean</code> value with the state of the collision
      */
     public boolean intersectaPowerUp(Object obj) {
         return ((obj instanceof PowerUps) && (getPerimetro().intersects(((PowerUps) obj).getPerimetro())));
      }
     
     /**
-     * 
-     * @param obj
-     * @return 
+     * To know if the ball is intersecting with the bricks
+     * @param obj to know if the ball is intersecting with it
+     * @return an <code>boolean</code> value with the state of the collision
      */
     public boolean intersectaBloque(Object obj) {
         return ((obj instanceof Enemy) && (getPerimetro().intersects(((Enemy) obj).getPerimetro())));

@@ -19,10 +19,10 @@ public class Player extends Item{
     private int height;     // to know the height of the player
     private Game game;      // to be able to use the KeyManager
     private int speedX;     // to store the speed the player travels in the x axis
-    private int speedY;     // to store the speed the player travels in the y axisprivate int collided;    // to know if the player collided with the edges of the screen and how many time it still needs to be drawn with a different image
+    private int speedY;     // to store the speed the player travels in the y axis
     
     /**
-     * to create direction, width, height, and game and set the player is not moving and has not collided
+     * to create direction, width, height, and game and set the player is not moving
      * @param x to set the x of the player
      * @param y to set the y of the player
      * @param direction to set the direction of the player
