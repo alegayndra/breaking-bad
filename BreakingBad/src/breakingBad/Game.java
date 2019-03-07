@@ -202,6 +202,20 @@ public class Game implements Runnable {
             }
 
         }
+        //creating second row of bricks
+        iPosX = 0;
+        iPosY = 250;
+        for(int i = 1; i <= 20; i++){
+            bricks.add(new Enemy(iPosX, iPosY, 100, 40, this));
+            iPosX += 80;
+            
+            //create 10 bricks every row
+            if(i % 10 == 0){
+                iPosY += 30;
+                iPosX = 0;
+            }
+        }
+        
         iPosY = 100;
         for(int i = 1; i <= 3; i++){
             //creating flasks in a row

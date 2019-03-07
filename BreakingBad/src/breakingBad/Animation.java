@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 /**
  *
  * @author melba
+ * Esta clase nos permite animar los flasks que ocupamos como power ups 
  */
 public class Animation {
     private int speed;
