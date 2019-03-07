@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author betin
+ * @author Alberto García Viegas A00822649 | Melba Geraldine Consuelos Fernández A01410921
  */
 public class ReadFile {
 //    private Game game;

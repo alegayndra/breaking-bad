@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author antoniomejorado
+ * @author Alberto García Viegas A00822649 | Melba Geraldine Consuelos Fernández A01410921
  */
 public class Game implements Runnable {
     private BufferStrategy bs;                               // to have several buffers when displaying

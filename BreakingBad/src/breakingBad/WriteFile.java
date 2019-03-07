@@ -9,7 +9,7 @@ import java.io.FileWriter;
 
 /**
  *
- * @author betin
+ * @author Alberto García Viegas A00822649 | Melba Geraldine Consuelos Fernández A01410921
  */
 public class WriteFile {
 //    private Game game;

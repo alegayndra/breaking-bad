@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 /**
  *
- * @author melba
+ * @author Alberto García Viegas A00822649 | Melba Geraldine Consuelos Fernández A01410921
  * Esta clase nos permite animar los flasks que ocupamos como power ups 
  */
 public class Animation {

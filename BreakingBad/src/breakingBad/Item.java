@@ -10,7 +10,7 @@ import java.awt.Graphics;
 
 /**
  *
- * @author antoniomejorado
+ * @author Alberto García Viegas A00822649 | Melba Geraldine Consuelos Fernández A01410921
  */
 public abstract class Item {
     protected int x;        // to store x position
