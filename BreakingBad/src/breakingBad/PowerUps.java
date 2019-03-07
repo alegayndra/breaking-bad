@@ -119,25 +119,40 @@ public class PowerUps extends Item{
     public Rectangle getPerimetro() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
+    
+    /**
+     * 
+     * @param obj
+     * @return 
+     */
     public boolean intersecta(Object obj) {
         return obj instanceof Ball && getPerimetro().intersects(((Ball) obj).getPerimetro());
     }
     
     // Carga la información del objeto desde un string
+    /**
+     * To set the value of the position in the x axis and the direction of the power up from the file that was loaded
+     * @param datos to set all the variables
+     */
     public void loadFromString(String[] datos){
         this.x = Integer.parseInt(datos[0]);
-        this.y = Integer.parseInt(datos[1]);
-        this.direction = Integer.parseInt(datos[2]);
+        this.direction = Integer.parseInt(datos[1]);
     }
     
+    /**
+     * To get all the variable that need to be stored in the file as a string
+     * @return an <code>String</code> value with all the information of the variables
+     */
     public String toString(){
-        return (x+" "+y+" "+direction);
+        return (x+" "+direction);
     }
     
     @Override
     public void tick() {
+        // updates the position of the power ups
         setX(getX() + getSpeed() * getDirection());
         
+        //animates the flask
         this.animateFlasks.tick();
         
         // checks that the object does not goes out of the bounds
@@ -153,6 +168,7 @@ public class PowerUps extends Item{
 
     @Override
     public void render(Graphics g) {
+        // checks which type of power up it is to know which asset to draw
         if (type == 1) {
             g.drawImage(animateFlasks.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
         } else {

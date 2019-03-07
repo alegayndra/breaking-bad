@@ -14,10 +14,10 @@ import java.awt.Rectangle;
  */
 public class Enemy extends Item {
     
-    private int width;
-    private int height;
-    private Game game;
-    private boolean destroyed;
+    private int width;                      // to store the width of the bricks
+    private int height;                     // to store the height of the bricks
+    private Game game;              // to store the game
+    private boolean destroyed;     // to store if the brick has been hit
     
     /**
      * to create direction, width, height, directionX, and directionY and set the enemy is not moving
@@ -51,7 +51,11 @@ public class Enemy extends Item {
     public int getHeight() {
         return height;
     }
-
+    
+    /**
+     * To know if the brick has been hit
+     * @return an <code>boolean</code> value of the state of the brick
+     */
     public boolean isDestroyed() {
         return destroyed;
     }
@@ -71,35 +75,36 @@ public class Enemy extends Item {
     public void setHeight(int height) {
         this.height = height;
     }
-
+    
+    /**
+     * To set if the brick has been hit
+     * @param destroyed 
+     */
     public void setDestroyed(boolean destroyed) {
         this.destroyed = destroyed;
     }
     
     // Carga la información del objeto desde un string
+    /**
+     * To set the value of destroyed from the file that was loaded
+     * @param datos to set all the variables
+     */
     public void loadFromString(String[] datos){
         this.destroyed = (Integer.parseInt(datos[0]) == 1 ? true : false);
     }
     
+    /**
+     * To get all the variable that need to be stored in the file as a string
+     * @return an <code>String</code> value with all the information of the variables
+     */
     public String toString(){
         return ((destroyed ? "1":"0"));
     }
-
-    public void tick(Player player) {
-        if (getX() + 60 >= game.getWidth()) {
-            setX(game.getWidth() - this.getWidth());
-        }
-        else if (getX() <= -30) {
-            setX(0);
-        }
-        if (getY() + 80 >= game.getHeight()) {
-            setY(game.getHeight() - this.getHeight());
-        }
-        else if (getY() <= -20) {
-            setY(0);
-        }
-    }
     
+    /**
+     * To get the rectangle of the brick
+     * @return an <code>Rectangle</code> value with the rectangle of the brick
+     */
     public Rectangle getPerimetro() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }

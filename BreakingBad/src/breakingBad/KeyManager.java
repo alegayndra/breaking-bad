@@ -16,15 +16,15 @@ public class KeyManager implements KeyListener {
 
     public boolean left;    // flag to move left the player
     public boolean right;   // flag to move right the player
-    public boolean pause;
-    public boolean save;
-    public boolean load;
-    public boolean lastPause;
-    public boolean lastSave;
-    public boolean lastLoad;
-    public boolean restart;
-    public boolean moveBall;
-    public boolean lastRestart;
+    public boolean pause;   // flag to pause the game
+    public boolean save;    // flag to save the game
+    public boolean load;    // flag to load the game
+    public boolean restart;     // flag to restart the game
+    public boolean lastPause;   // flag to know the state of the pause on the previous tick
+    public boolean lastSave;    // flag to know the state of the save on the previous tick
+    public boolean lastLoad;    // flag to know the state of the load on the previous tick
+    public boolean lastRestart; // flag to know the state of the restart on the previous tick
+    public boolean moveBall;    // flag to move the ball
     
     private boolean keys[];  // to store all the flags for every key
     
@@ -53,7 +53,7 @@ public class KeyManager implements KeyListener {
      */
     public void tick() {
         /**
-         * checks if in the last tick the keys 'p', 'g', and 'c' were pressed and if in the current tick they were released
+         * checks if in the last tick the keys 'p', 'g', 'c', and 'r' were pressed and if in the current tick they were released
          * if this is true the corresponding flag of the key is true, else it is false
          */
         if (lastPause && !keys[KeyEvent.VK_P]) {
