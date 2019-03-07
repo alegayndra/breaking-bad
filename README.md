@@ -1,6 +1,6 @@
 # breaking-bad
 Tarea de Videojuegos - Breaking Bad
-
+**LO HICIMOS PERRAS**
 Todo list:
 - Mover la barra (KeyManager y Player) __DONE__
 - La pelota en general 
