@@ -230,8 +230,8 @@ public class Game implements Runnable {
         for(int i = 1;  i <= 2; i++){
             int dirX = (int) (Math.random() * 2-1)+1;
             pollos.add(new PowerUps(iPosX, iPosY, 100, 100, 2, dirX ,2, this));
-            //iPosX += 100;
-            iPosY += 50;
+            iPosX += 400;
+            //iPosY += 60;
         } 
         cantBricks = bricks.size();
         lives = 3;
@@ -374,13 +374,29 @@ public class Game implements Runnable {
             //ticking all powerups
             for(int i = 0; i < powerUps.size(); i++){
                 PowerUps powerUp = powerUps.get(i);
+                //checking collisions with power ups
+                 if(ball.intersectaPowerUp(powerUp)){
+                  powerUp.setDestroyed(true);
+                  //reward for touching flaks
+                  player.setWidth((int) (getWidth() * (0.2)));
+                  
+                }
                 powerUp.tick();
             }
             //icking all pollos
             for(int i = 0; i < pollos.size(); i++){
                 PowerUps pollo = pollos.get(i);
+                //checking collisions with pollos
+                if(ball.intersectaPowerUp(pollo)){
+                  pollo.setDestroyed(true);
+                  //punishment for touching pollo
+                  ball.setSpeed(ball.getSpeed() +1);
+                    
+                }
                 pollo.tick();
             }
+            
+           
             
             // ticking the ball
             ball.tick();
@@ -395,6 +411,7 @@ public class Game implements Runnable {
                     ball.setDirectionX(1);
                 }
             }
+         
             //ticking all bricks
             for (int i = 0; i < bricks.size(); i++) {
                 Enemy brick =  bricks.get(i);
@@ -471,12 +488,16 @@ public class Game implements Runnable {
                 //rendering powerups
                 for(int i = 0; i < powerUps.size(); i++){
                     PowerUps powerUp = powerUps.get(i);
+                    if(!powerUp.isDestroyed()){
                     powerUp.render(g);
+                }
                 }
                 //rendering all pollos
                 for(int i = 0; i < pollos.size(); i++){
                     PowerUps pollo = pollos.get(i);
+                    if(!pollo.isDestroyed()){
                     pollo.render(g);
+                }
                 }
             }
             bs.show();

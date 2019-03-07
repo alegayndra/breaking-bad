@@ -20,6 +20,7 @@ public class PowerUps extends Item{
     private int type;
     private Game game;
     private Animation animateFlasks;
+    private boolean destroyed;
     
     public PowerUps (int x, int y, int width, int height, int speed ,int direction, int type, Game game) {
         super(x, y);
@@ -76,6 +77,11 @@ public class PowerUps extends Item{
      * To set the width of the power up
      * @param width to set the width of the power up
      */
+    
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
     public void setWidth(int width) {
         this.width = width;
     }
@@ -112,6 +118,18 @@ public class PowerUps extends Item{
         this.type = type;
     }
 
+    public void setDestroyed(boolean destroyed) {
+        this.destroyed = destroyed;
+    }
+    
+     public void loadFromString(String[] datos){
+        this.destroyed = (Integer.parseInt(datos[0]) == 1 ? true : false);
+    }
+    
+    public String toString(){
+        return ((destroyed ? "1":"0"));
+    }
+
        /**
      * To get a rectangle with the position, width, and height of the power up
      * @return an <code>Rectangle</code> rectangle with the given position, width, and height
@@ -123,16 +141,7 @@ public class PowerUps extends Item{
         return obj instanceof Ball && getPerimetro().intersects(((Ball) obj).getPerimetro());
     }
     
-    // Carga la información del objeto desde un string
-    public void loadFromString(String[] datos){
-        this.x = Integer.parseInt(datos[0]);
-        this.y = Integer.parseInt(datos[1]);
-        this.direction = Integer.parseInt(datos[2]);
-    }
     
-    public String toString(){
-        return (x+" "+y+" "+direction);
-    }
     
     @Override
     public void tick() {
