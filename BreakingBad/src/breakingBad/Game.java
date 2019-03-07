@@ -27,30 +27,30 @@ import java.util.logging.Logger;
  * @author antoniomejorado
  */
 public class Game implements Runnable {
-    private BufferStrategy bs;                          // to have several buffers when displaying
-    private Graphics g;                                    // to paint objects
-    private Display display;                             // to display in the game
-    String title;                                                 // title of the window
-    private int width;                                        // width of the window
-    private int height;                                       // height of the window
-    private Thread thread;                              // thread to create the game
-    private boolean running;                           // to set the game
-    private Player player;                                // to use a player
-    private KeyManager keyManager;            // to manage the keyboard
-    private LinkedList<Enemy> bricks;                              // to move an enemy
-    private int lives;                                         // to count the remaining lives of the player
-    private boolean endGame;                       // to know when to end the game
-    private Ball ball;                      //to use a ball
-    private LinkedList<PowerUps> powerUps;
-    private LinkedList <PowerUps> pollos;
-    private int score;
-    private boolean pauseGame;
-    private int cantBricks;
-    private String nombreArchivo;
-    private Font texto;
+    private BufferStrategy bs;                               // to have several buffers when displaying
+    private Graphics g;                                         // to paint objects
+    private Display display;                                    // to display in the game
+    String title;                                                       // title of the window
+    private int width;                                              // width of the window
+    private int height;                                             // height of the window
+    private Thread thread;                                     // thread to create the game
+    private boolean running;                                // to set the game
+    private Player player;                                      // to use a player
+    private KeyManager keyManager;                  // to manage the keyboard
+    private LinkedList<Enemy> bricks;               // to move an enemy
+    private int lives;                                              // to count the remaining lives of the player
+    private boolean endGame;                            // to know when to end the game
+    private Ball ball;                                              //to use a ball
+    private LinkedList<PowerUps> powerUps;  // to use the power ups
+    private LinkedList <PowerUps> pollos;       // to use the pollos
+    private int score;                                          // to store the score
+    private boolean pauseGame;                      // flag to know if the game is paused
+    private int cantBricks;                                 // to store the quantity of remaining bricks
+    private String nombreArchivo;                   // to store the name of the file
+    private Font texto;                                     // to change the font of string drawn in the screen
     
     /**
-     * to create title, width and height and set the game is still not running
+     * to create title, width, height, keyManager, bricks, powerUps, pollos, nombreArchivo, and texto and set the game is still not running
      * @param title to set the title of the window
      * @param width to set the width of the window
      * @param height  to set the height of the window
@@ -182,13 +182,25 @@ public class Game implements Runnable {
     }
     
     /**
+     * To get the key manager
+     * @return an <code>KeyManager</code> value with the key manager
+     */
+     public KeyManager getKeyManager() {
+        return keyManager;
+    }
+    
+    /**
      * initializing the display window of the game
      */
     private void init() {
         display = new Display(title, getWidth(), getHeight());
         Assets.init();
+        
+        //creating the player and the ball
         player = new Player(getWidth() / 2, getHeight() -100, 1, 100, 30, this);
         ball = new Ball(player.getX() + player.getWidth()/2, player.getY()-player.getHeight(), 50, 50, this);
+        
+        // set up the initial position for the bricks
         int iPosX = 0;
         int iPosY = 0;
         for (int i = 1; i <= 30; i++) {
@@ -217,6 +229,7 @@ public class Game implements Runnable {
             }
         }
         
+        // setting up the initial position of the power ups
         iPosY = 100;
         for(int i = 1; i <= 3; i++){
             //creating flasks in a row
@@ -232,6 +245,8 @@ public class Game implements Runnable {
             iPosX += 400;
             //iPosY += 60;
         } 
+        
+        // setting up the game variables
         score = 0;
         cantBricks = bricks.size();
         lives = 3;
@@ -269,11 +284,7 @@ public class Game implements Runnable {
             }
         }
         stop();
-    }
-
-    public KeyManager getKeyManager() {
-        return keyManager;
-    }
+    }   
 
     private void tick() {
         // ticks key manager
@@ -310,52 +321,117 @@ public class Game implements Runnable {
             ball.setY(player.getY() - player.getHeight());
             ball.setMoving(false);
             
-            // sets the initial position for the bricks
+            bricks = new LinkedList<Enemy>();
+            powerUps = new LinkedList<PowerUps>();
+            pollos = new LinkedList<PowerUps>();
+            
+             // set up the initial position for the bricks
             int iPosX = 0;
             int iPosY = 0;
-            
-            // resets all bricks
-            for (int i = 0; i < bricks.size(); i++) {
-                System.out.println(i + "\n" + iPosX + " " + iPosY);
-               //create bricks in a row
-               bricks.get(i).setX(iPosX);
-               bricks.get(i).setY(iPosY);
-               bricks.get(i).setDestroyed(false);
-               iPosX +=80;
-               System.out.println("" + iPosX + " " + iPosY);
-               // create 10 bricks every row
-               if(i % 10 == 0 && i != 0){
-                   iPosY +=30;
-                   iPosX = 0;
-               }
-           }
-            
-            iPosY = 100;
+            for (int i = 1; i <= 30; i++) {
+                //create bricks in a row
+                bricks.add(new Enemy(iPosX, iPosY, 100, 40, this));
+                iPosX +=80;
+
+                // create 10 bricks every row
+                if(i % 10 == 0 ){
+                    iPosY +=30;
+                    iPosX = 0;
+                }
+
+            }
+            //creating second row of bricks
             iPosX = 0;
+            iPosY = 250;
+            for(int i = 1; i <= 20; i++){
+                bricks.add(new Enemy(iPosX, iPosY, 80, 30, this));
+                iPosX += 80;
+
+                //create 10 bricks every row
+                if(i % 10 == 0){
+                    iPosY += 30;
+                    iPosX = 0;
+                }
+            }
+
+            // setting up the initial position of the power ups
+            iPosY = 100;
+            for(int i = 1; i <= 3; i++){
+                //creating flasks in a row
+                int dirX = (int) (Math.random() * 2-1)+1;
+                powerUps.add(new PowerUps(iPosX, iPosY, 100, 100, 3, dirX, 1, this));
+                iPosX += 300;
+
+            } 
+            iPosX-=200;
+            for(int i = 1;  i <= 2; i++){
+                int dirX = (int) (Math.random() * 2-1)+1;
+                pollos.add(new PowerUps(iPosX, iPosY, 100, 100, 2, dirX ,2, this));
+                iPosX += 400;
+                //iPosY += 60;
+            } 
             
-           // resets all flasks
-           for(int i = 0; i < 3; i++){
-               //creating flasks in a row
-               PowerUps flask = powerUps.get(i);
-               int dirX = (int) (Math.random() * 2-1)+1;
-               flask.setX(iPosX);
-               flask.setDirection(dirX);
-               iPosX += 300;
-               iPosY = 100;           
-           } 
-           
-           iPosX-=200;
-           
-           // reset all chickens
-           for(int i = 0;  i < 2; i++){
-               PowerUps pollo = pollos.get(i);
-               int dirX = (int) (Math.random() * 2-1)+1;
-               pollo.setX(iPosX);
-               pollo.setDirection(dirX);
-               //iPosX += 100;
-               iPosY += 50;
-           }
-           
+//            // sets the initial position for the bricks
+//            int iPosX = 0;
+//            int iPosY = 0;
+//            
+//            // resets first block of bricks
+//            for (int i = 0; i < 30; i++) {
+//                System.out.println(i + "\n" + iPosX + " " + iPosY);
+//               //create bricks in a row
+//               bricks.get(i).setX(iPosX);
+//               bricks.get(i).setY(iPosY);
+//               bricks.get(i).setDestroyed(false);
+//               iPosX +=80;
+//               System.out.println("" + iPosX + " " + iPosY);
+//               // create 10 bricks every row
+//               if(i % 10 == 0 && i != 0){
+//                   iPosY +=30;
+//                   iPosX = 0;
+//               }
+//           }
+//            
+//        // reseting second block of bricks
+//        iPosX = 0;
+//        iPosY = 250;
+//        for(int i = 30; i < 49; i++){
+//            bricks.add(new Enemy(iPosX, iPosY, 80, 30, this));
+//            iPosX += 80;
+//            
+//            //create 10 bricks every row
+//            if(i % 10 == 0){
+//                iPosY += 30;
+//                iPosX = 0;
+//            }
+//        }
+//            
+//            // sets up the initial position of the power ups
+//            iPosY = 100;
+//            iPosX = 0;
+//            
+//           // resets all flasks
+//           for(int i = 0; i < 3; i++){
+//               //creating flasks in a row
+//               PowerUps flask = powerUps.get(i);
+//               int dirX = (int) (Math.random() * 2-1)+1;
+//               flask.setX(iPosX);
+//               flask.setDirection(dirX);
+//               iPosX += 300;
+//               iPosY = 100;           
+//           } 
+//           
+//           iPosX-=200;
+//           
+//           // reset all chickens
+//           for(int i = 0;  i < 2; i++){
+//               PowerUps pollo = pollos.get(i);
+//               int dirX = (int) (Math.random() * 2-1)+1;
+//               pollo.setX(iPosX);
+//               pollo.setDirection(dirX);
+//               //iPosX += 100;
+//               iPosY += 50;
+//           }
+//           
            // resets game variables
            score = 0;
            cantBricks = bricks.size();
@@ -511,7 +587,9 @@ public class Game implements Runnable {
             for(int i = 0; i < getLives(); i++){
                g.drawImage(Assets.heart, getWidth()-50-(i*40), getHeight()-50, 45,45, null);
             } 
+            // draw score
             g.drawString("Score: " + score, 5, getHeight()-20);
+            
             bs.show();
             g.dispose();
         }
@@ -543,19 +621,29 @@ public class Game implements Runnable {
         }
     }
     
-    // todo lo que tiene que ver con lectura de archivos
+    /**
+     * To get all the variable that need to be stored in the file as a string
+     * @return an <code>String</code> value with all the information of the variables
+     */
     public String toString(){
         return (score+" "+lives+" "+(endGame ? 1:0));
     }
     
     // Carga la información del objeto desde un string
+    /**
+     * To set the value of the score, lives and the state of the game from the file that was loaded
+     * @param datos to set all the variables
+     */
     public void loadFromString(String[] datos){
         this.score = Integer.parseInt(datos[0]);
         this.lives = Integer.parseInt(datos[1]);
         this.endGame = (Integer.parseInt(datos[2]) == 1 ? true : false);
     }
     
-    // Se encarga de guardar en un archivo toda la informacion de nuestra partida
+    /**
+     * Writes in the given file all the given information
+     * @throws IOException when file not found
+     */
     public void grabarArchivo() throws IOException {
         PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
         fileOut.println(this.toString());
@@ -573,7 +661,10 @@ public class Game implements Runnable {
         fileOut.close();
     }
     
-    // Lee toda la información que guardamos sobre la partida y la carga
+    /**
+     * Load all the information from the given file
+     * @throws IOException when file not found
+     */
     public void leeArchivo() throws IOException {
                                                           
         BufferedReader fileIn;
