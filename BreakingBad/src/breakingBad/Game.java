@@ -6,6 +6,7 @@
 package breakingBad;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.io.BufferedReader;
@@ -46,6 +47,7 @@ public class Game implements Runnable {
     private boolean pauseGame;
     private int cantBricks;
     private String nombreArchivo;
+    private Font texto;
     
     /**
      * to create title, width and height and set the game is still not running
@@ -64,6 +66,7 @@ public class Game implements Runnable {
         powerUps = new LinkedList<PowerUps>();
         pollos = new LinkedList<PowerUps>();
         nombreArchivo = "src/breakingbad/archivo.sf";
+        texto = new Font("Font", 2, 32);
     }
 
     /**
@@ -229,6 +232,7 @@ public class Game implements Runnable {
             iPosX += 400;
             //iPosY += 60;
         } 
+        score = 0;
         cantBricks = bricks.size();
         lives = 3;
         endGame = false;
@@ -353,6 +357,7 @@ public class Game implements Runnable {
            }
            
            // resets game variables
+           score = 0;
            cantBricks = bricks.size();
            lives = 3;
            endGame = false;
@@ -429,6 +434,7 @@ public class Game implements Runnable {
                         ball.setDirectionY(1);
                         brick.setDestroyed(true);
                         cantBricks--;
+                        score += 10;
                     }
                 }
             }
@@ -466,10 +472,13 @@ public class Game implements Runnable {
         else
         {
             g = bs.getDrawGraphics();
+            g.setFont(texto);
             g.drawImage(Assets.background, 0, 0, width, height, null);
             if(endGame) {
                 //g.drawImage(Assets.endGame, getWidth() / 2 - 131, getHeight() / 2 - 30, 262, 60, null);
                 // we draw a string saying game over and another string giving instructions to the player on how to restart the game
+                g.drawString("Game Over", getWidth()/2 - 80, getHeight()/2);
+                g.drawString("Press 'r' to restart", getWidth()/2 - 120, getHeight()/2 + 30);
             } else {
                 
                 // rendering the ball and player
@@ -498,6 +507,11 @@ public class Game implements Runnable {
                 }
                 }
             }
+            //lives system
+            for(int i = 0; i < getLives(); i++){
+               g.drawImage(Assets.heart, getWidth()-50-(i*40), getHeight()-50, 45,45, null);
+            } 
+            g.drawString("Score: " + score, 5, getHeight()-20);
             bs.show();
             g.dispose();
         }

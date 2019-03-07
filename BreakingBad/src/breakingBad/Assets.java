@@ -22,6 +22,7 @@ public class Assets {
     public static BufferedImage brick;                  // to store the brick image
     //to store flask color
     public static BufferedImage flasks[];
+    public static BufferedImage heart;
 // 
     /**
      * initializing the images of the game
@@ -35,6 +36,21 @@ public class Assets {
         blueFlask_right = ImageLoader.loadImage("/images/blueflask_right.png");
         ball = ImageLoader.loadImage("/images/ballCopy.png");
         brick = ImageLoader.loadImage("/images/brickCopy.png");
+
+        heart = ImageLoader.loadImage("/images/heart.png");
+        //bomb = new SoundClip("/images/mono.wav");
+//        colorF = ImageLoader.loadImage("/images/flask_spritesheet.jpg");
+        
+        //creating array of images
+//        SpreadSheet spritesheet = new SpreadSheet(colorF);
+//        colors = new BufferedImage[9];
+        
+        //cropping pictures from the sheet into the array
+//        for(int i = 0; i < 9; i++){
+//            colors[i] = spritesheet.crop(i*64, 0, 64, 64);
+//        }
+//        SpreadSheet spritesheet = new SpreadSheet(colorF);
+//        colors = new BufferedImage[3];
         flasks = new BufferedImage[3];
         
         for(int i = 0; i < 3; i++){
