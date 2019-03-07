@@ -21,7 +21,7 @@ public class ReadFile {
     
     public void readFile(Game game) {
         // Fichero del que queremos leer
-        File file = new File("archivo.txt");
+        File file = new File("src/breakingbad/archivo.txt");
         Scanner s = null;
         
         int x, y, width, height, dirX, dirY, type, score, lives, endGame;
@@ -90,6 +90,21 @@ public class ReadFile {
                 game.getPowerUps().get(i).setHeight(height);
                 game.getPowerUps().get(i).setType(type);
                 System.out.println(game.getPowerUps().get(i).getX() + " " + game.getPowerUps().get(i).getY() + " " + game.getPowerUps().get(i).getWidth() + " " + game.getPowerUps().get(i).getHeight() + " " + game.getPowerUps().get(i).getType() + " " + "\n");
+            }
+            
+            //pollos
+            for (int i = 0; i < game.getPollos().size(); i++) {
+                x = Integer.parseInt(linea);
+                y = Integer.parseInt(linea);
+                width = Integer.parseInt(linea);
+                height = Integer.parseInt(linea);
+                type = Integer.parseInt(linea);
+                
+                game.getPollos().get(i).setX(x);
+                game.getPollos().get(i).setY(y);
+                game.getPollos().get(i).setWidth(width);
+                game.getPollos().get(i).setHeight(height);
+                game.getPollos().get(i).setType(type);
             }
             
             //game

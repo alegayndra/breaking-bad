@@ -35,8 +35,12 @@ public class WriteFile {
             file = new FileWriter("src/breakingbad/archivo.txt");
             
             //player
-            file.write(game.getPlayer().getX() + "\n" + game.getPlayer().getWidth() + "\n" + game.getPlayer().getX()  + "\n");
-            System.out.println(game.getPlayer().getX() + "\n" + game.getPlayer().getWidth() + "\n" + game.getPlayer().getX()  + "\n");
+//            file.write(game.getPlayer().getX() + "\n" + game.getPlayer().getWidth() + "\n" + game.getPlayer().getX()  + "\n");
+            file.write(game.getPlayer().getX() + "\n");
+            file.write(game.getPlayer().getWidth() + "\n");
+            file.write(game.getPlayer().getHeight()  + "\n");
+
+            System.out.println(game.getPlayer().getX() + "\n" + game.getPlayer().getWidth() + "\n" + game.getPlayer().getHeight()  + "\n");
 
             //bricks
             for (int i = 0; i < game.getBricks().size(); i++) {
@@ -58,6 +62,13 @@ public class WriteFile {
                 file.write(power.getX() + "\n" + power.getY() + "\n" + power.getWidth() + "\n" + power.getHeight() + "\n" + power.getType()  + "\n");
                 System.out.println(power.getX() + " " + power.getY() + " " + power.getWidth() + " " + power.getHeight() + " " + power.getType() + " " + "\n");
             }
+            
+                //pollos
+                for (int i = 0; i < game.getPollos().size(); i++) {
+                    PowerUps power = game.getPollos().get(i);
+                    file.write(power.getX() + "\n" + power.getY() + "\n" + power.getWidth() + "\n" + power.getHeight() + "\n" + power.getType()  + "\n");
+                    System.out.println(power.getX() + " " + power.getY() + " " + power.getWidth() + " " + power.getHeight() + " " + power.getType() + " " + "\n");
+                }
             
             //game
             file.write(game.getScore() + "\n" + game.getLives() + "\n" + (game.isEndGame() ? "1" : "0") + "\n");

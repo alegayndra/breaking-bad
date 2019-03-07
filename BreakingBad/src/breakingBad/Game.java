@@ -106,7 +106,14 @@ public class Game implements Runnable {
     public LinkedList<PowerUps> getPowerUps() {
         return powerUps;
     }
-    
+
+    /**
+     * 
+     * @return 
+     */
+    public int getCantBricks() {
+        return cantBricks;
+    }
     
     /**
      * 
@@ -156,10 +163,13 @@ public class Game implements Runnable {
         this.score = score;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public LinkedList<PowerUps> getPollos() {
         return pollos;
     }
-    
     
     /**
      * initializing the display window of the game
