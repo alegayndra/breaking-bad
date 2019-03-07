@@ -32,7 +32,7 @@ public class WriteFile {
         FileWriter file = null;
         try {
 
-            file = new FileWriter("src/breakingbad/archivo.txt");
+            file = new FileWriter("src/breakingbad/archivo.sf");
             
             //player
 //            file.write(game.getPlayer().getX() + "\n" + game.getPlayer().getWidth() + "\n" + game.getPlayer().getX()  + "\n");
@@ -53,13 +53,13 @@ public class WriteFile {
             }
 
             //ball
-            file.write(game.getBall().getX() + "\n" + game.getBall().getY() + "\n" + game.getBall().getWidth() + "\n" + game.getBall().getHeight() + "\n" + game.getBall().getDirectionX() + "\n" + game.getBall().getDirectionY() + "\n");
-            System.out.println(game.getBall().getX() + "\n" + game.getBall().getY() + "\n" + game.getBall().getWidth() + "\n" + game.getBall().getHeight() + "\n" + game.getBall().getDirectionX() + "\n" + game.getBall().getDirectionY() + "\n");
+            file.write(game.getBall().getX() + "\n" + game.getBall().getY() + "\n" + game.getBall().getDirectionX() + "\n" + game.getBall().getDirectionY() + "\n");
+            System.out.println(game.getBall().getX() + "\n" + game.getBall().getY() + "\n" + game.getBall().getDirectionX() + "\n" + game.getBall().getDirectionY() + "\n");
             
             //powerUps
             for (int i = 0; i < game.getPowerUps().size(); i++) {
                 PowerUps power = game.getPowerUps().get(i);
-                file.write(power.getX() + "\n" + power.getY() + "\n" + power.getWidth() + "\n" + power.getHeight() + "\n" + power.getType()  + "\n");
+                file.write(power.getX() + "\n" + power.getY() + "\n" + power.getType()  + "\n");
                 System.out.println(power.getX() + " " + power.getY() + " " + power.getWidth() + " " + power.getHeight() + " " + power.getType() + " " + "\n");
             }
             

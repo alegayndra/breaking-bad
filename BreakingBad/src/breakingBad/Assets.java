@@ -29,13 +29,13 @@ public class Assets {
      */
     public static void init() {
         background = ImageLoader.loadImage("/images/desert.jpg");
-        paddle = ImageLoader.loadImage("/images/paddle.png");
+        paddle = ImageLoader.loadImage("/images/paddleCopy.png");
         pollos = ImageLoader.loadImage("/images/breakingbad-lospolloshermanosrug.png");
         blueFlask = ImageLoader.loadImage("/images/blueflask.png");
         blueFlask_left = ImageLoader.loadImage("/images/blueflask_left.png");
         blueFlask_right = ImageLoader.loadImage("/images/blueflask_right.png");
-        ball = ImageLoader.loadImage("/images/ball.png");
-        brick = ImageLoader.loadImage("/images/brick.png");
+        ball = ImageLoader.loadImage("/images/ballCopy.png");
+        brick = ImageLoader.loadImage("/images/brickCopy.png");
         //bomb = new SoundClip("/images/mono.wav");
 //        colorF = ImageLoader.loadImage("/images/flask_spritesheet.jpg");
         

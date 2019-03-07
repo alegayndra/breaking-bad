@@ -21,7 +21,7 @@ public class ReadFile {
     
     public void readFile(Game game) {
         // Fichero del que queremos leer
-        File file = new File("src/breakingbad/archivo.txt");
+        File file = new File("src/breakingbad/archivo.sf");
         Scanner s = null;
         
         int x, y, width, height, dirX, dirY, type, score, lives, endGame;
@@ -46,8 +46,7 @@ public class ReadFile {
             
             game.getPlayer().setX(x);
             game.getPlayer().setWidth(width);
-            game.getPlayer().setHeight(height);
-            System.out.println(game.getPlayer().getX() + " " + game.getPlayer().getWidth() + " " + game.getPlayer().getX()  + "\n");
+            System.out.println(game.getPlayer().getX() + " " + game.getPlayer().getWidth() +  "\n");
 
             //bricks
             for (int i = 0; i < game.getBricks().size(); i++) {

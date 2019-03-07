@@ -115,6 +115,16 @@ public class Player extends Item{
         return ((obj instanceof Enemy) && (getPerimetro().intersects(((Enemy) obj).getPerimetro())));
      }
     
+    // Carga la información del objeto desde un string
+    public void loadFromString(String[] datos){
+        this.x = Integer.parseInt(datos[0]);
+        this.width = Integer.parseInt(datos[1]);
+    }
+    
+    public String toString(){
+        return (x+" "+width);
+    }
+    
     @Override
     public void tick() {
         // moving player depending on flags

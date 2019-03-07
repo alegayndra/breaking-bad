@@ -75,6 +75,15 @@ public class Enemy extends Item {
     public void setDestroyed(boolean destroyed) {
         this.destroyed = destroyed;
     }
+    
+    // Carga la información del objeto desde un string
+    public void loadFromString(String[] datos){
+        this.destroyed = (Integer.parseInt(datos[0]) == 1 ? true : false);
+    }
+    
+    public String toString(){
+        return ((destroyed ? "1":"0"));
+    }
 
     public void tick(Player player) {
         if (getX() + 60 >= game.getWidth()) {

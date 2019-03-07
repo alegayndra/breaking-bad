@@ -162,6 +162,18 @@ public class Ball extends Item{
         return ((obj instanceof Enemy) && (getPerimetro().intersects(((Enemy) obj).getPerimetro())));
      }
     
+    // Carga la información del objeto desde un string
+    public void loadFromString(String[] datos){
+        this.x = Integer.parseInt(datos[0]);
+        this.y = Integer.parseInt(datos[1]);
+        this.directionX = Integer.parseInt(datos[2]);
+        this.directionY = Integer.parseInt(datos[3]);
+    }
+    
+    public String toString(){
+        return (x+" "+y+" "+directionX + " " + directionY);
+    }
+    
     @Override
     public void tick() {
         if (moving) {
@@ -183,7 +195,7 @@ public class Ball extends Item{
                 setDirectionY(1);
             }
         } else {
-            setX(game.getPlayer().getX() - getWidth() / 2);
+            setX(game.getPlayer().getX() + getWidth() / 2);
             setY(game.getPlayer().getY() - getHeight());
         }
     }

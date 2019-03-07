@@ -8,9 +8,18 @@ package breakingBad;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -38,6 +47,7 @@ public class Game implements Runnable {
     private int score;
     private boolean pauseGame;
     private int cantBricks;
+    private String nombreArchivo;
     
     /**
      * to create title, width and height and set the game is still not running
@@ -57,6 +67,7 @@ public class Game implements Runnable {
         rFile = new ReadFile();
         powerUps = new LinkedList<PowerUps>();
         pollos = new LinkedList<PowerUps>();
+        nombreArchivo = "src/breakingbad/archivo.sf";
     }
 
     /**
@@ -175,30 +186,31 @@ public class Game implements Runnable {
      * initializing the display window of the game
      */
     private void init() {
-         display = new Display(title, getWidth(), getHeight());
-         Assets.init();
-         player = new Player(getWidth() / 2, getHeight() -100, 1, 100, 100, this);
-         ball = new Ball(player.getX()-50, player.getY()-100, 100, 100, this);
-         int iPosX = 0;
-         int iPosY = 0;
-         for (int i = 1; i <= 30; i++) {
+        display = new Display(title, getWidth(), getHeight());
+        Assets.init();
+        player = new Player(getWidth() / 2, getHeight() -100, 1, 100, 30, this);
+        ball = new Ball(player.getX() + player.getWidth()/2, player.getY()-player.getHeight(), 50, 50, this);
+        int iPosX = 0;
+        int iPosY = 0;
+        for (int i = 1; i <= 30; i++) {
             //create bricks in a row
-            bricks.add(new Enemy(iPosX, iPosY, 100, 100, this));
+            bricks.add(new Enemy(iPosX, iPosY, 100, 40, this));
             iPosX +=80;
-            
+
             // create 10 bricks every row
             if(i % 10 == 0 ){
                 iPosY +=30;
                 iPosX = 0;
             }
-            
+
         }
+        iPosY = 100;
         for(int i = 1; i <= 3; i++){
             //creating flasks in a row
             int dirX = (int) (Math.random() * 2-1)+1;
-            powerUps.add(new PowerUps(iPosX, iPosY, 100, 100, 3, dirX, 1, this));
+            powerUps.add(new PowerUps(iPosX, iPosY, iPosY, 100, 3, dirX, 1, this));
             iPosX += 300;
-            iPosY = 100;           
+            
         } 
         iPosX-=200;
         for(int i = 1;  i <= 2; i++){
@@ -207,11 +219,11 @@ public class Game implements Runnable {
             //iPosX += 100;
             iPosY += 50;
         } 
-        cantBricks = 30;
-         lives = 3;
-         endGame = false;
-         display.getJframe().addKeyListener(keyManager);
-         pauseGame = false;
+        cantBricks = bricks.size();
+        lives = 3;
+        endGame = false;
+        display.getJframe().addKeyListener(keyManager);
+        pauseGame = false;
     }
 
     @Override
@@ -250,61 +262,99 @@ public class Game implements Runnable {
     }
 
     private void tick() {
+        // ticks key manager
         keyManager.tick();
+        
+        // ckecks flags for pausing, saving, and loading
         if (getKeyManager().pause) {
             pauseGame = !pauseGame;
         }
         if (getKeyManager().save) {
-            wFile.writeFile(this);
+//            wFile.writeFile(this);
+            try {
+                grabarArchivo();
+            } catch (IOException ex) {
+                Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } 
         if (getKeyManager().load) {
-            rFile.readFile(this);
+//            rFile.readFile(this);
+            try {
+                    leeArchivo();
+                } catch (IOException ex) {
+                    Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+                }
         }
-        if (getKeyManager().restart) {
-            player = new Player(getWidth() / 2, getHeight() -100, 1, 100, 100, this);
-            ball = new Ball(player.getX()-50, player.getY()-100, 100, 100, this);
+        
+        // checks flag for restarting and if that the game has ended
+        if (getKeyManager().restart) {// && endGame) {
+            
+            player.setX(getWidth() / 2);
+            player.setY(getHeight() - player.getHeight());
+            
+            ball.setX(player.getX() + player.getWidth() / 2);
+            ball.setY(player.getY() - player.getHeight());
+            ball.setMoving(false);
+            
             int iPosX = 0;
             int iPosY = 0;
-            for (int i = 1; i <= 30; i++) {
+            
+            for (int i = 0; i < bricks.size(); i++) {
+                System.out.println(i + "\n" + iPosX + " " + iPosY);
                //create bricks in a row
-               bricks.add(new Enemy(iPosX, iPosY, 100, 100, this));
+               bricks.get(i).setX(iPosX);
+               bricks.get(i).setY(iPosY);
+               bricks.get(i).setDestroyed(false);
                iPosX +=80;
-
+               System.out.println("" + iPosX + " " + iPosY);
                // create 10 bricks every row
-               if(i % 10 == 0 ){
+               if(i % 10 == 0 && i != 0){
                    iPosY +=30;
                    iPosX = 0;
                }
-
            }
-           for(int i = 1; i <= 3; i++){
+            
+            iPosY = 100;
+            iPosX = 0;
+            
+           for(int i = 0; i < 3; i++){
                //creating flasks in a row
+               PowerUps flask = powerUps.get(i);
                int dirX = (int) (Math.random() * 2-1)+1;
-               powerUps.add(new PowerUps(iPosX, iPosY, 100, 100, 2, dirX, 1, this));
+               flask.setX(iPosX);
+               flask.setDirection(dirX);
                iPosX += 300;
                iPosY = 100;           
            } 
+           
            iPosX-=200;
-           for(int i = 1;  i <= 2; i++){
+           
+           for(int i = 0;  i < 2; i++){
+               PowerUps pollo = pollos.get(i);
                int dirX = (int) (Math.random() * 2-1)+1;
-               pollos.add(new PowerUps(iPosX, iPosY, 100, 100, 1, dirX ,2, this));
+               pollo.setX(iPosX);
+               pollo.setDirection(dirX);
                //iPosX += 100;
                iPosY += 50;
-           } 
-           cantBricks = 30;
+           }
+           
+           cantBricks = bricks.size();
            lives = 3;
            endGame = false;
-           display.getJframe().addKeyListener(keyManager);
            pauseGame = false;
          }
-        // avancing player with colision
+        
+        // checks if the game has ended if it paused
         if (!endGame && !pauseGame) {
             
+            // checks flag for start moving the ball at the beginning of a game
             if (getKeyManager().moveBall && !ball.isMoving()) {
                 ball.setMoving(true);
                 ball.setSpeed(3);
                 ball.setDirectionY(-1);
             }
+            
+            // ticks the player
             player.tick();
             
             //ticking all powerups
@@ -334,6 +384,7 @@ public class Game implements Runnable {
             //ticking all bricks
             for (int i = 0; i < bricks.size(); i++) {
                 Enemy brick =  bricks.get(i);
+                // collision with bricks
                 if (!brick.isDestroyed()) {
                     if (ball.intersectaBloque(brick)) {
 //                    if (ball.getX() + ball.getSpeed() * ball.getDirectionX() <= brick.getX() + brick.getWidth()) {
@@ -352,9 +403,11 @@ public class Game implements Runnable {
                     }
                 }
             }
+            // if all bricks are destroyed the game is ended
             if (cantBricks == 0) {
                 endGame = true;
             }
+            // if the ball touches the botton of the screen its position is reset and you lose one live. If you lose all lives the game is ended
             if (ball.getY() + ball.getHeight() >= getHeight()) {
                 lives--;
                 if(lives == 0) {
@@ -387,7 +440,10 @@ public class Game implements Runnable {
             g.drawImage(Assets.background, 0, 0, width, height, null);
             if(endGame) {
                 //g.drawImage(Assets.endGame, getWidth() / 2 - 131, getHeight() / 2 - 30, 262, 60, null);
+                // we draw a string saying game over and another string giving instructions to the player on how to restart the game
             } else {
+                
+                // rendering the ball and player
                 player.render(g);
                 ball.render(g);
                 
@@ -438,5 +494,63 @@ public class Game implements Runnable {
                 ie.printStackTrace();
             }
         }
+    }
+    
+    // todo lo que tiene que ver con lectura de archivos
+    public String toString(){
+        return (score+" "+lives+" "+(endGame ? 1:0));
+    }
+    
+    // Carga la información del objeto desde un string
+    public void loadFromString(String[] datos){
+        this.score = Integer.parseInt(datos[0]);
+        this.lives = Integer.parseInt(datos[1]);
+        this.endGame = (Integer.parseInt(datos[2]) == 1 ? true : false);
+    }
+    
+    // Se encarga de guardar en un archivo toda la informacion de nuestra partida
+    public void grabarArchivo() throws IOException {
+        PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
+        fileOut.println(this.toString());
+        fileOut.println(player.toString());
+        fileOut.println(ball.toString());
+        for(Enemy brick : bricks){
+            fileOut.println(brick.toString());
+        }
+        for (PowerUps flask : powerUps) {
+            fileOut.println(flask.toString());
+        }
+        for (PowerUps pollo : pollos) {
+            fileOut.println(pollo.toString());
+        }
+        fileOut.close();
+    }
+    
+    // Lee toda la información que guardamos sobre la partida y la carga
+    public void leeArchivo() throws IOException {
+                                                          
+        BufferedReader fileIn;
+        try {
+            fileIn = new BufferedReader(new FileReader(nombreArchivo));
+        } catch (FileNotFoundException e){
+            File archivo = new File(nombreArchivo);
+            PrintWriter fileOut = new PrintWriter(archivo);
+            fileOut.println("100,demo");
+            fileOut.close();
+            fileIn = new BufferedReader(new FileReader(nombreArchivo));
+        }
+        loadFromString(fileIn.readLine().split("\\s+"));
+        this.player.loadFromString(fileIn.readLine().split("\\s+"));
+        this.ball.loadFromString(fileIn.readLine().split("\\s+"));
+        for(Enemy brick : bricks){
+            brick.loadFromString(fileIn.readLine().split("\\s+"));
+        }
+        for (PowerUps flask : powerUps) {
+            flask.loadFromString(fileIn.readLine().split("\\s+"));
+        }
+        for (PowerUps pollo : pollos) {
+            pollo.loadFromString(fileIn.readLine().split("\\s+"));
+        }
+        fileIn.close();
     }
 }

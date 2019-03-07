@@ -123,6 +123,17 @@ public class PowerUps extends Item{
         return obj instanceof Ball && getPerimetro().intersects(((Ball) obj).getPerimetro());
     }
     
+    // Carga la información del objeto desde un string
+    public void loadFromString(String[] datos){
+        this.x = Integer.parseInt(datos[0]);
+        this.y = Integer.parseInt(datos[1]);
+        this.direction = Integer.parseInt(datos[2]);
+    }
+    
+    public String toString(){
+        return (x+" "+y+" "+direction);
+    }
+    
     @Override
     public void tick() {
         setX(getX() + getSpeed() * getDirection());
