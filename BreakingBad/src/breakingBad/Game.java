@@ -501,6 +501,10 @@ public class Game implements Runnable {
                 }
                 }
             }
+            //lives system
+            for(int i = 0; i < getLives(); i++){
+               g.drawImage(Assets.heart, 50+(i*40), 600, 45,45, null);
+            } 
             bs.show();
             g.dispose();
         }

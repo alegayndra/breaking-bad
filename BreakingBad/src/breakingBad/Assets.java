@@ -23,6 +23,7 @@ public class Assets {
     //public static SoundClip bomb;           // to store the sound of the bomb
     //to store flask color
     public static BufferedImage flasks[];
+    public static BufferedImage heart;
 // 
     /**
      * initializing the images of the game
@@ -36,6 +37,7 @@ public class Assets {
         blueFlask_right = ImageLoader.loadImage("/images/blueflask_right.png");
         ball = ImageLoader.loadImage("/images/ballCopy.png");
         brick = ImageLoader.loadImage("/images/brickCopy.png");
+        heart = ImageLoader.loadImage("/images/heart.png");
         //bomb = new SoundClip("/images/mono.wav");
 //        colorF = ImageLoader.loadImage("/images/flask_spritesheet.jpg");
         
